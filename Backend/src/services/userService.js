@@ -1,5 +1,7 @@
 // src/services/userService.js
 const UserRepository = require('../dataAccess/userRepository');
+const bcrypt = require('bcrypt');
+const User = require('../models/userModel');
 
 const UserService = {
     getAllUsers: async () => {
@@ -28,10 +30,17 @@ const UserService = {
      */
     createUser: async (userData) => {
         try {
-        const newUserId = await UserRepository.createUser(userData);
-        return newUserId;
+            // Hash the password before setting it on the userData object
+            const hashedPassword = await bcrypt.hash(userData.password, 2);
+            userData.password = hashedPassword;
+            // Assuming `User` expects an object rather than individual arguments
+            const user = new User(userData);
+        
+            // Save the user using the repository
+            const newUserId = await UserRepository.createUser(user);
+            return newUserId;
         } catch (error) {
-        throw error;
+            throw error;
         }
     }
 };
