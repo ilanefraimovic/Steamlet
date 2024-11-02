@@ -1,11 +1,10 @@
 // src/routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
+const UserController = require('../controllers/userController');
 
 // Example routes
-router.get('/', (req, res) => {
-  res.json({ message: 'Get all users' });
-});
+router.get('/', UserController.getAllUsers);
 
 router.post('/', (req, res) => {
   res.json({ message: 'Create a new user' });
