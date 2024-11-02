@@ -1,3 +1,4 @@
+const User = require('../models/userModel');
 const UserService = require('../services/userService');
 
 const UserController = {
@@ -10,8 +11,22 @@ const UserController = {
       res.status(500).json({ error: error.message });
     }
   },
+  createUser: async (req, res) => {
+    try {
 
-  // Other controller methods...
+        console.log(req.body);
+        const {userName, password} = req.body;
+        if(!userName || !password){
+            throw new Error("Username and Password are required");
+        }
+
+        const users = await UserService.createUser(new User({userName: userName, password: password}));
+        // res.json(users);
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+  }
 };
 
 module.exports = UserController;

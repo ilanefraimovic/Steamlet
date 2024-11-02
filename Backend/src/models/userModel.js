@@ -1,12 +1,12 @@
 // src/models/userModel.js
 class User {
-    constructor(id, name, email, password) {
-      this.id = id;
-      this.name = name;
-      this.email = email;
-      this.password = password;
+    constructor(body) {
+        this.id = body.id;
+        this.userName = body.userName;
+        this.password = body.password;
+        this.createDate = body.createDate;
     }
   }
   
-  module.exports = User;
+module.exports = User;
   

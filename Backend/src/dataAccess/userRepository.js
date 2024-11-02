@@ -5,14 +5,14 @@ const User = require('../models/userModel');
 const UserRepository = {
   getAllUsers: () => {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM users', (error, results) => {
+      db.query('SELECT id, username, create_date FROM users', (error, results) => {
         if (error) {
             console.log(error);
             return reject(error);
         };
 
         // Map results to User instances if needed
-        const users = results.map(row => new User(row.id, row.name, row.email, row.password));
+        const users = results.map(row => new User({id: row.id, userName: row.username, createDate: row.create_date}));
         resolve(users);
       });
     });
@@ -32,12 +32,20 @@ const UserRepository = {
 
   createUser: (userData) => {
     return new Promise((resolve, reject) => {
-      db.query('INSERT INTO users SET ?', userData, (error, results) => {
-        if (error) return reject(error);
-        resolve(results.insertId);
+      const query = 'INSERT INTO users (username, password, create_date) VALUES (?, ?, NOW())';
+      const values = [userData.userName, userData.password];
+      
+      db.query(query, values, (error, results) => {
+        if (error) {
+          return reject(error); // Reject promise on error
+        }
+        resolve(results.insertId); // Resolve with the generated user ID
       });
     });
   }
+  
+  
+  
 };
 
 module.exports = UserRepository;
