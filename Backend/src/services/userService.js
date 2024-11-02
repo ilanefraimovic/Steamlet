@@ -42,6 +42,20 @@ const UserService = {
         } catch (error) {
             throw error;
         }
+    },
+    /**
+     * Delete a user.
+     * @param {User} userData - The user data.
+     * @returns {Promise<number>} The old user ID.
+     */
+    deleteUser: async (userData) => {
+        try {
+            // Save the user using the repository
+            const newUserId = await UserRepository.deleteUser(userData);
+            return newUserId;
+        } catch (error) {
+            throw error;
+        }
     }
 };
 

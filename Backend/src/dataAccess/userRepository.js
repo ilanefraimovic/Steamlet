@@ -42,6 +42,24 @@ const UserRepository = {
         resolve(results.insertId); // Resolve with the generated user ID
       });
     });
+  },
+  deleteUser: (userData) => {
+    return new Promise((resolve, reject) => {
+      const query = 'DELETE FROM users WHERE id = ?';
+      
+      db.query(query, [userData.id], (error, results) => {
+        if (error) {
+          return reject(error); // Reject promise on error
+        }
+        
+        // Check if a row was deleted
+        if (results.affectedRows === 0) {
+          return reject(new Error('User not found')); // Reject if no rows affected
+        }
+  
+        resolve(true); // Resolve if delete was successful
+      });
+    });
   }
   
   
