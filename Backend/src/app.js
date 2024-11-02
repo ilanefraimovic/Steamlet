@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-//const routes = require('./routes'); // Import your routes
+const routes = require('./routes'); 
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parses URL-encoded reques
 app.use(morgan('dev')); // Logs requests to the console in development
 
 // Routes
-//app.use('/api/v1', routes); // Use /api as the base path for all routes
+app.use('/api/v1', routes); // Use /api as the base path for all routes
 
 // Error handling middleware (optional)
 app.use((err, req, res, next) => {
