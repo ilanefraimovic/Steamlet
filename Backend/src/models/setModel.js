@@ -1,13 +1,10 @@
-// src/models/SetModel.js
 class Set {
-    constructor(id, name, date) {
-      this.id = id;
-      this.user_id = user_id;
-      this.name = name;
-      this.date = date;
-      
-    }
+  constructor(body) {
+      this.id = body.id;
+      this.user_id = body.user_id; 
+      this.name = body.name;
+      this.date = body.date;
   }
-  
-  module.exports = Set;
-  
+}
+
+module.exports = Set;

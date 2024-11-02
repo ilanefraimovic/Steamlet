@@ -1,18 +1,17 @@
 // src/routes/setRoutes.js
 const express = require('express');
 const router = express.Router();
-const setController = require('../controllers/setController');
+const SetController = require('../controllers/setController');
 
 // Example routes
-router.get('/', setController.getAllSets);
+router.get('/', SetController.getAllSets);
 
-router.post('/createSet', (req, res) => {
-  res.json({ message: 'Create a new set' });
-});
+router.get('/:id', SetController.getAllSets);
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({ message: `Get set with ID: ${id}` });
-});
+router.post('/create', SetController.createSet);
+
+router.put('/update/:id', SetController.updateSet);
+
+router.delete('/delete/:id', SetController.deleteSet);
 
 module.exports = router;
