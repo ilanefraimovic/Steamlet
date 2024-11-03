@@ -1,26 +1,54 @@
 import React, { useState, useRef } from "react";
-
+import axios from "axios";
+import { useUser } from "../UserContext";
 const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
     const [popupState, setPopupState] = useState("NAME_SET");
     const setNameRef = useRef(null);
     const termRef = useRef(null);
     const definitionRef = useRef(null);
+    let createResponse;
 
     const handleCreate = () => {
         const setNameValue = setNameRef.current.value;
         if (setNameValue) {
-            // Add set to database
+            const pushSetToDB = async () => {
+            try {
+                const {userId } = useUser;
+                const requestBody = {
+                    name: setNameValue, 
+                    user_id: {userId},
+                };
+
+            const response = await axios.post('http://localhost:3000/api/v1/sets/create', requestBody); // Use POST with a body
+            createResponse = response;
+            } catch (error) {
+                console.error("Error creating set:", error);
+            }
+        };
+            pushSetToDB();
             onSetPush(setNameValue);
-            // Switch to ADD_CARD state
             setPopupState("ADD_CARD");
+            setNameRef.current.value = '';
         }
     };
 
     const handleCardAdded = () => {
         const term = termRef.current.value;
         const definition = definitionRef.current.value;
-        if (term && definition) {
-            // Add card to database
+        if (term && definition && createResponse) {
+            const pushCardToDB = async () => {
+            try {
+                const requestBody = {
+                    setId:{createResponse}, 
+                    term: {term},
+                    definition:{definition}
+                };
+                const response = await axios.post('http://localhost:3000/api/v1/cards/add', requestBody); // Use POST with a body
+            } catch (error) {
+                console.error("Error creating set:", error);
+            }
+        };
+            pushCardToDB();
             onAddCard({ term, definition });
             // Clear term and definition inputs for next entry
             termRef.current.value = '';
