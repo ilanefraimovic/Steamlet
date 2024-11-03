@@ -28,6 +28,14 @@ const CardService = {
     } catch (error) {
       throw error;
     }
+  },
+  deleteCard: async (cardData) => {
+    try {
+      const oldCardId = await CardRepository.deleteCard(cardData);
+      return oldCardId;
+    } catch (error) {
+      throw error;
+    }
   }
 };
 

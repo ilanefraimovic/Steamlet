@@ -26,7 +26,24 @@ const CardController = {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+  }
+  ,
+  deleteCard: async (req, res) => {
+      try {
+          console.log(req.body); // This will help you see the incoming data
+          const { cardId, userId } = req.body; 
+          if (!cardId || !userId) {
+              throw new Error("cardId and userId are required");
+          }
+
+          const oldCard = new Card({ id: cardId, userId: userId});
+
+          const oldCardId = await CardService.deleteCard(oldCard);
+          res.json({ oldCardId });
+      } catch (error) {
+          res.status(500).json({ error: error.message });
+      }
+  }
 };
 
 module.exports = CardController;
