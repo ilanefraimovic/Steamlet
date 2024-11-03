@@ -14,7 +14,7 @@ const HomePage = () => {
                     // Add more fields as necessary
                 };
 
-                const response = await axios.post('/api/sets', requestBody); // Use POST with a body
+                const response = await axios.post('http://localhost:3000/api/v1/sets', requestBody); // Use POST with a body
                 const fetchedSets = response.data.map(set => new Set(set.numberOfCards, set.setName, set.listOfCards));
                 setSets(fetchedSets);
             } catch (error) {

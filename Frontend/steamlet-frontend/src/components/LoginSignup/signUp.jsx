@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const SignUp = ({ toggleForm }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Directly toggle to sign-in form
-        toggleForm(); // Switch to the sign-in form
+        try {
+            const response = await axios.post('http://localhost:3000/api/v1/users/create', { // Replace with your actual API endpoint
+                userName: username,
+                password: password,
+            });
+
+            console.log('User created:', response.data);
+
+            // Directly toggle to sign-in form
+            toggleForm(); // Switch to the sign-in form
+        } catch (error) {
+            if (error.response) {
+                // If the server responded with a status code outside of the 2xx range
+                setErrorMessage(error.response.data.error || 'Error creating user');
+            } else {
+                // If there was an error in setting up the request
+                setErrorMessage('Error creating user');
+            }
+        }
     };
 
     return (
@@ -35,6 +54,7 @@ const SignUp = ({ toggleForm }) => {
                     Sign Up
                 </button>
             </form>
+            {errorMessage && <p className="mt-4 text-red-500">{errorMessage}</p>}
             <p className="mt-4 text-center">
                 Already have an account?{' '}
                 <button onClick={toggleForm} className="text-blue-500">
