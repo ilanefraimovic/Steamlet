@@ -6,11 +6,13 @@ const SignUp = ({ toggleForm }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Api call using axios
+
+        // Directly toggle to sign-in form
+        toggleForm(); // Switch to the sign-in form
     };
 
     return (
-        <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-sm">
+        <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-sm" style={{ backgroundColor: '#e1c289' }}>
             <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
             <form onSubmit={handleSubmit}>
                 <input

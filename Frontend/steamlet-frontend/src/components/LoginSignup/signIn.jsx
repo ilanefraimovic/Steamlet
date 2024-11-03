@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = ({ toggleForm }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle sign-in logic
+        // Instead of making an API call, navigate directly to the home page
+        navigate('/home'); // Change '/home' to your desired path
     };
 
     return (
-        <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-sm">
+        <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-sm" style={{ backgroundColor: '#d89841' }}>
             <h2 className="text-2xl font-bold mb-6">Sign In</h2>
             <form onSubmit={handleSubmit}>
                 <input
