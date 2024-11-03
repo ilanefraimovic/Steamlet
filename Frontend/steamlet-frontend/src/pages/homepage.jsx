@@ -33,9 +33,9 @@ const HomePage = () => {
                     // Add more fields as necessary
                 };
 
-                const response = await axios.post('http://localhost:3000/api/v1/sets', requestBody); // Use POST with a body
-                const fetchedSets = response.data.map(set => new Set(set.numberOfCards, set.setName, set.listOfCards));
-                setSets(fetchedSets);
+                // const response = await axios.post('http://localhost:3000/api/v1/sets', requestBody); // Use POST with a body
+                // const fetchedSets = response.data.map(set => new Set(set.numberOfCards, set.setName, set.listOfCards));
+                // setSets(fetchedSets);
             } catch (error) {
                 console.error("Error fetching sets:", error);
             }
@@ -64,9 +64,10 @@ const HomePage = () => {
 
     const HandleSetSelected = (setID) => {
         //get and cache set
-        const dispatch = useDispatch();
-        dispatch(setSetId(setID)); // Dispatch action to set the selected set ID
-        navigate('/study');
+        console.log("testt");
+        // const dispatch = useDispatch();
+        // dispatch(setSetId(setID)); // Dispatch action to set the selected set ID
+        // navigate('/study');
     }
 
     return (
