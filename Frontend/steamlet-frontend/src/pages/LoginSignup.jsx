@@ -1,37 +1,39 @@
 import React, { useState } from "react";
-import '../styles/LoginSignup.css';
+import SignUp from "../components/LoginSignup/signUp";
+import SignIn from "../components/LoginSignup/signIn";
 
-import user_icon from '../resources/Assets/user.png';
-import password_icon from '../resources/Assets/key.png';
-
+import sign_user from "../resources/Assets/Another_background.jpg";
 
 export const LoginSignup = () => {
-  const [action,setAction] = useState("Sign Up");
-  return (
-    <div className='container'>
-      <div className="header">
-         <div className="text">{action}</div> 
-         <div className="underline"></div>
-      </div>
-      <div className="inputs">
-         {action === "Login"?<div></div>:<div className="input">
-            <img src={user_icon} alt=""/>
-            <input type ="text" placeholder="Name"/>
-         </div>}
-        
-         <div className="input">
-            <img src={password_icon} alt="ps"/>
-            <input type ="password" placeholder="Password"/>
+   const [isSignUp, setIsSignUp] = useState(true); // State to toggle between sign up and sign in
+
+   return (
+      <div className="flex h-screen" style={{ backgroundColor: '#bfaf9c' }}> {/* Change the color here */}
+         {/* Image Container */}
+         <div
+            className="relative w-1/2 transition-transform duration-500"
+            style={{
+               transform: isSignUp ? "translateX(0)" : "translateX(100%)",
+            }}
+         >
+            <img src={sign_user} alt="Placeholder" className="object-cover h-full w-full" />
+         </div>
+
+         {/* Form Container */}
+         <div
+            className="w-full lg:w-1/2 flex items-center justify-center p-4 transition-transform duration-500"
+            style={{
+               transform: isSignUp ? "translateX(0)" : "translateX(-100%)",
+            }}
+         >
+            {isSignUp ? (
+               <SignUp toggleForm={() => setIsSignUp(false)} />
+            ) : (
+               <SignIn toggleForm={() => setIsSignUp(true)} />
+            )}
          </div>
       </div>
-      {action=== "Sign Up"?<div></div>:<div className="forgot-password">Lost Password? <span>CLick Here!</span></div>
-      }
-      <div className="submit-container">
-       <div className={action ==="Login"?"submit gray": "submit"}onClick={()=>{setAction("Sign Up")}}>Sign Up</div>
-       <div className={action ==="Sign Up"?"submit gray": "submit"}onClick={()=>{setAction("Login")}}>Login</div>
-      </div>
-    </div>
-  );
-}
+   );
+};
 
 export default LoginSignup;
