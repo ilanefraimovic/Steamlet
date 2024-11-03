@@ -2,7 +2,7 @@
 class Card {
   constructor(body) {
       this.id = body.id;
-      this.set_id = body.set_id;
+      this.setId = body.setId;
       this.term = body.term;
       this.definition = body.definition;
       this.create_date = body.create_date;

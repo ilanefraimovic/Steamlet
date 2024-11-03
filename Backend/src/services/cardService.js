@@ -1,5 +1,5 @@
 // src/services/userService.js
-const cardRepository = require('../dataAccess/cardRepository');
+const CardRepository = require('../dataAccess/cardRepository');
 
 const CardService = {
   getAllCards: async () => {
@@ -21,9 +21,9 @@ const CardService = {
     }
   },
 
-  createCard: async (cardData) => {
+  addCard: async (cardData) => {
     try {
-      const newCardId = await CardRepository.createUser(cardData);
+      const newCardId = await CardRepository.createCard(cardData);
       return newCardId;
     } catch (error) {
       throw error;

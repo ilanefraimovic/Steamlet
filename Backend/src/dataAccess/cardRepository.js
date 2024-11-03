@@ -29,10 +29,15 @@ const CardRepository = {
       });
     });
   },
-
   createCard: (cardData) => {
     return new Promise((resolve, reject) => {
-      db.query('INSERT INTO cards card ?', cardData, (error, results) => {
+      const query = `
+        INSERT INTO cards (set_id, term, definition, create_date) 
+        VALUES (?, ?, ?, CURRENT_DATE)
+      `;
+      const values = [cardData.setId, cardData.term, cardData.definition];
+
+      db.query(query, values, (error, results) => {
         if (error) return reject(error);
         resolve(results.insertId);
       });
