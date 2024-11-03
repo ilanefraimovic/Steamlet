@@ -1,37 +1,29 @@
 import React, { useState } from "react";
 import '../styles/LoginSignup.css';
-
-import user_icon from '../resources/Assets/user.png';
-import password_icon from '../resources/Assets/key.png';
-
+import SignUp from "../components/LoginSignup/signUp";
+import SignIn from "../components/LoginSignup/signIn";
 
 export const LoginSignup = () => {
-  const [action,setAction] = useState("Sign Up");
-  return (
-    <div className='container'>
-      <div className="header">
-         <div className="text">{action}</div> 
-         <div className="underline"></div>
-      </div>
-      <div className="inputs">
-         {action === "Login"?<div></div>:<div className="input">
-            <img src={user_icon} alt=""/>
-            <input type ="text" placeholder="Name"/>
-         </div>}
-        
-         <div className="input">
-            <img src={password_icon} alt="ps"/>
-            <input type ="password" placeholder="Password"/>
+
+   const [isSignUp, setIsSignUp] = useState(true); // State to toggle between sign up and sign in
+
+   return (
+      <div className="flex h-screen">
+         {/* Left Side Image */}
+         <div className="w-1/2 hidden lg:block bg-gray-300">
+            {/* Placeholder for Image */}
+            <img src="https://via.placeholder.com/600" alt="Placeholder" className="object-cover h-full" />
+         </div>
+         {/* Right Side Form */}
+         <div className="w-full lg:w-1/2 flex items-center justify-center p-4">
+            {isSignUp ? (
+               <SignUp toggleForm={() => setIsSignUp(false)} />
+            ) : (
+               <SignIn toggleForm={() => setIsSignUp(true)} />
+            )}
          </div>
       </div>
-      {action=== "Sign Up"?<div></div>:<div className="forgot-password">Lost Password? <span>CLick Here!</span></div>
-      }
-      <div className="submit-container">
-       <div className={action ==="Login"?"submit gray": "submit"}onClick={()=>{setAction("Sign Up")}}>Sign Up</div>
-       <div className={action ==="Sign Up"?"submit gray": "submit"}onClick={()=>{setAction("Login")}}>Login</div>
-      </div>
-    </div>
-  );
+   );
 }
 
 export default LoginSignup;
