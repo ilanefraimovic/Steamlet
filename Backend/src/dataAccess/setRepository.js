@@ -83,6 +83,26 @@ const SetRepository = {
           resolve(true); // Resolve if delete was successful
         });
       });
+    },
+    /**
+     * Retrieves a list of set IDs associated with a given user ID.
+     * @param {string} userId - The ID of the user.
+     * @returns {Promise<number[]>} A promise that resolves to an array of set IDs.
+     */
+    getSetIdsByUserId: (userId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT set_id FROM sets WHERE user_id = ?'; // Assumes there's a `user_id` column in `sets` table
+        
+        db.query(query, [userId], (error, results) => {
+        if (error) {
+            return reject(error); // Reject promise on error
+        }
+
+        // Map the results to only include the `id` field for each set
+        const setIds = results.map(row => row.set_id);
+        resolve(setIds);
+        });
+    });
     }
     
 };
