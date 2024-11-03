@@ -10,7 +10,7 @@ const Card = ({ content, onMatch, isMatchable, className }) => {
 
         return (
             <div
-                className={`card ${className}`}
+                className={`${className}`}
                 onClick={handleClick}
                 style={{
                     backgroundImage: `url(${cardImage})`, // Replace with your actual image path
@@ -26,7 +26,7 @@ const Card = ({ content, onMatch, isMatchable, className }) => {
         // Placeholder for the non-matchable card rendering logic
         return (
             <div
-                className={`card ${className}`}
+                className={`${className}`}
                 style={{
                     backgroundImage: `url(${cardImage})`, // Replace with your actual image path
                     backgroundSize: "cover",
