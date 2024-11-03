@@ -1,21 +1,27 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Router components
 import LoginSignup from './pages/LoginSignup';
-import HomePahe from './pages/homepage';
+import HomePage from './pages/homepage';
 import MatchPage from './pages/matchPage';
 import StudyPage from './pages/studyPage';
+import { UserProvider } from './UserContext';
+import store from './reduxStore';
+import { Provider } from 'react-redux';
 
 function App() {
   return (
+    <Provider store={store}>
+    <UserProvider>
     <Router>
       <Routes>
-        <Route path="/" element={<LoginSignup />} /> {/* Route for the login/signup page */}
-        <Route path="/home" element={<HomePahe />} /> {/* Route for the login/signup page */}
-
-        <Route path="/match" element={<MatchPage />} /> {/* Route for the match page */}
-        <Route path="/study" element={<StudyPage />} /> {/* Route for the study page */}
+          <Route path="/" element={<LoginSignup />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/match" element={<MatchPage />} />
+          <Route path="/study" element={<StudyPage />} />
       </Routes>
     </Router>
+    </UserProvider>
+    </Provider>
   );
 }
 
