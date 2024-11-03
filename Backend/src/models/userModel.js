@@ -7,6 +7,8 @@ class User {
         this.createDate = body.createDate;
     }
   }
+
+
   
 module.exports = User;
   
