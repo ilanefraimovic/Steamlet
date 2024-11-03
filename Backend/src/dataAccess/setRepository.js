@@ -50,10 +50,10 @@ const SetRepository = {
             const { user_id,name, date,id } = updatedData;
             const query = ` 
                 UPDATE sets 
-                SET user_id = ?, name = ?, create_date = ? 
+                SET user_id = ?, name = ?, create_date = NOW() 
                 WHERE set_id = ?
             `;
-            const values = [user_id, name, date, id];
+            const values = [user_id, name, id];
             console.log(values);
             db.query(query, values, (error, results) => {
                 if (error) {

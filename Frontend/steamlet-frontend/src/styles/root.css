@@ -1,0 +1,5 @@
+.parent-container {
+    display: flex; /* Ensure it's a flex container */
+    flex-direction: column; /* Ensure it arranges children in a column */
+    height: 100%; /* Make it take the full height */
+}

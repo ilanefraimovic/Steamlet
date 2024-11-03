@@ -1,13 +1,18 @@
 import React from 'react';
 import LeftSidePanel from './visualComponents/LeftSidePanel.jsx';
+import { useNavigate } from 'react-router-dom'
 
 const FunctionalSideBar = () => {
   const buttons = ['Study', 'Matching'];
-  
+  const navigate = useNavigate();
   // Define an array of click handlers
   const onClicks = [
-    () => console.log('Study button clicked'),
-    () => console.log('Matching button clicked')
+    () => {
+      navigate('/study')
+    },
+    () => {
+      navigate('/match')
+    }
   ];
 
   return (
