@@ -8,7 +8,7 @@ const LeftSidePanel = ({ buttons = [], onClicks = [] }) => {
 
   // Back button handler
   const handleBack = () => {
-    navigate(-1); // Navigate to the previous page
+    navigate('/home'); // Navigate to the previous page
   };
 
   return (
