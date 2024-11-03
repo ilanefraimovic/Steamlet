@@ -29,12 +29,33 @@ const CardRepository = {
       });
     });
   },
-
   createCard: (cardData) => {
     return new Promise((resolve, reject) => {
-      db.query('INSERT INTO cards card ?', cardData, (error, results) => {
+      const query = `
+        INSERT INTO cards (set_id, term, definition, create_date) 
+        VALUES (?, ?, ?, CURRENT_DATE)
+      `;
+      const values = [cardData.setId, cardData.term, cardData.definition];
+
+      db.query(query, values, (error, results) => {
         if (error) return reject(error);
         resolve(results.insertId);
+      });
+    });
+  },
+  deleteCard: (cardData) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        DELETE c FROM cards c
+        JOIN sets s ON s.set_id = c.set_id
+        JOIN users u ON u.id = s.user_id
+        WHERE c.card_id = ? AND s.user_id = ?
+      `;
+      const values = [cardData.id, cardData.userId];
+  
+      db.query(query, values, (error, results) => {
+        if (error) return reject(error);
+        resolve(results.affectedRows); // Returns the number of rows affected
       });
     });
   }

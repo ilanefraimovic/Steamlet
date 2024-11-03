@@ -4,6 +4,7 @@ class Set {
       this.user_id = body.user_id; 
       this.name = body.name;
       this.date = body.date;
+      this.count = body.count;
   }
 }
 

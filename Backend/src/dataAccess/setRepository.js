@@ -3,7 +3,6 @@ const db = require('../config/db');
 const Set = require('../models/setModel');
 
 const SetRepository = {
-    // ... other methods remain unchanged
     getAllSets: () => {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM sets', (error, results) => {
@@ -39,7 +38,6 @@ const SetRepository = {
             const values = [setData.user_id, setData.name, setData.date];
             console.log(values);
             db.query(query, values, (error, results) => {
-              //  const sets = Array.isArray(results) ? results.map(row => new Set(row)) : [];
                 if (error) return reject(error);
                 resolve(results.insertId);
             });
@@ -84,6 +82,30 @@ const SetRepository = {
           resolve(true); // Resolve if delete was successful
         });
       });
+    },
+    /**
+     * Retrieves a list of set IDs associated with a given user ID.
+     * @param {string} userId - The ID of the user.
+     * @returns {Promise<number[]>} A promise that resolves to an array of set IDs.
+     */
+    getSetIdsByUserId: (userId) => {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT s.set_id, s.name, COUNT(c.card_id) AS count 
+                        FROM sets s
+                        LEFT JOIN cards c ON s.set_id = c.set_id
+                        WHERE s.user_id = ?
+                        GROUP BY s.set_id, s.name`; // Assumes there's a `user_id` column in `sets` table
+        
+        db.query(query, [userId], (error, results) => {
+        if (error) {
+            return reject(error); // Reject promise on error
+        }
+
+        // Map the results to only include the `id` field for each set
+        const setIds = results.map(row => new Set({id: row.set_id, name: row.name, count: row.count}));
+        resolve(setIds);
+        });
+    });
     }
     
 };

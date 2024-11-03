@@ -1,6 +1,7 @@
 // src/dataAccess/userRepository.js
 const db = require('../config/db');
 const User = require('../models/userModel');
+const bcrypt = require('bcrypt');
 
 const UserRepository = {
   getAllUsers: () => {
@@ -59,10 +60,33 @@ const UserRepository = {
         resolve(true); // Resolve if delete was successful
       });
     });
+  },
+  loginUser: (userData) => {
+    return new Promise((resolve, reject) => {
+      // Query to find the user by username
+      const query = 'SELECT * FROM users WHERE username = ?';
+      
+      db.query(query, [userData.userName], async (error, results) => {
+        if (error) return reject(error);
+        
+        // If no user found, resolve with null
+        if (results.length === 0) return resolve(null);
+        
+        const user = results[0];
+        
+        // Compare the provided password with the hashed password in the database
+        const isPasswordValid = await bcrypt.compare(userData.password, user.password);
+        
+        if (!isPasswordValid) {
+          // Password does not match
+          return resolve(null);
+        }
+        
+        // If credentials are valid, return the user ID
+        resolve(user.id);
+      });
+    });
   }
-  
-  
-  
 };
 
 module.exports = UserRepository;

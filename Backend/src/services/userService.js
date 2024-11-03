@@ -2,6 +2,8 @@
 const UserRepository = require('../dataAccess/userRepository');
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
+const SetRepository = require('../dataAccess/setRepository');
+const LoggedInUser = require('../models/userLoginModel');
 
 const UserService = {
     getAllUsers: async () => {
@@ -50,9 +52,23 @@ const UserService = {
      */
     deleteUser: async (userData) => {
         try {
-            // Save the user using the repository
-            const newUserId = await UserRepository.deleteUser(userData);
-            return newUserId;
+            // Delete the user using the repository
+            const oldUserId = await UserRepository.deleteUser(userData);
+            return oldUserId;
+        } catch (error) {
+            throw error;
+        }
+    },
+    loginUserAndReturnObject: async (userData) => {
+        try {
+
+            const user = new User(userData);
+            // Get the userId
+            const userId = await UserRepository.loginUser(user);
+
+            //Retrieve the set ids affiliated with the user
+            const sets = await SetRepository.getSetIdsByUserId(userId);
+            return new LoggedInUser({userId: userId, sets: sets});
         } catch (error) {
             throw error;
         }

@@ -27,16 +27,29 @@ const UserController = {
   },
   deleteUser: async (req, res) => {
     try {
-        const { userId } = req.body;
-
-        if(!userId){
-            throw new Error("UserId is required");
+        const {userName, password} = req.body;
+        if(!userName || !password){
+            throw new Error("Username and Password are required");
         }
-            
-        const id = await UserService.deleteUser(new User({id: userId}));
-        res.json(id);
+
+        const userId = await UserService.loginUser(new User({userName: userName, password: password}));
+        // res.json(users);
+        res.json(userId);
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+  },
+  loginUser: async (req, res) => {
+    try {
+        const {userName, password} = req.body;
+        if(!userName || !password){
+            throw new Error("Username and Password are required");
+        }
+        
+        const users = await UserService.loginUserAndReturnObject(new User({userName: userName, password: password}));
+        res.json(users);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   }
 };
