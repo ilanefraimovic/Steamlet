@@ -3,7 +3,6 @@ const db = require('../config/db');
 const Set = require('../models/setModel');
 
 const SetRepository = {
-    // ... other methods remain unchanged
     getAllSets: () => {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM sets', (error, results) => {
@@ -39,7 +38,6 @@ const SetRepository = {
             const values = [setData.user_id, setData.name, setData.date];
             console.log(values);
             db.query(query, values, (error, results) => {
-              //  const sets = Array.isArray(results) ? results.map(row => new Set(row)) : [];
                 if (error) return reject(error);
                 resolve(results.insertId);
             });
