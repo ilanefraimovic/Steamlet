@@ -1,6 +1,5 @@
 // src/actions/authActions.js
 import axios from 'axios';
-import { useUser } from '../UserContext';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -8,18 +7,17 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const login = (username, password) => async (dispatch) => {
     try {
         const response = await axios.post('http://localhost:3000/api/v1/users/login', { userName: username, password });
-        const { userId } = response.data; // Assuming your response has this structure
-        const { setUserId } = useUser();
-        setUserId(userId);
+        const { userId, sets } = response.data; // Assuming your response has this structure
+        
         // Dispatch the success action with userId
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: { userId }, // Adjust according to your response structure
+            payload: { userId, sets }, // Adjust according to your response structure
         });
 
         return {
             type: LOGIN_SUCCESS,
-            payload: { userId }, // Return the action for checking in the component
+            payload: { userId, sets }, // Return the action for checking in the component
         };
     } catch (error) {
         // Handle error and dispatch failure
