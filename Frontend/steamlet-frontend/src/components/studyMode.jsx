@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Card from "../components/Card.jsx"
+import { useDispatch, useSelector } from 'react-redux';
+
 const StudyMode = () => {
     const [cards, setCards] = useState([]);
     let [currentIndex, setCurrentIndex] = useState([]);
+    const dispatch = useDispatch();
+    const setId = useSelector((state) => state.set.setId);
+
+    const [currentCard, setCurrentCard] = useState({});
+    const [currentUsableCard, setCurrentUsableCard] = useState();
 
     useEffect(() => {
         const fetchCards = async () => {
