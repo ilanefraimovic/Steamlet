@@ -50,10 +50,10 @@ const SetRepository = {
             const { user_id,name, date,id } = updatedData;
             const query = ` 
                 UPDATE sets 
-                SET user_id = ?, name = ?, create_date = ? 
+                SET user_id = ?, name = ?, create_date = NOW() 
                 WHERE set_id = ?
             `;
-            const values = [user_id, name, date, id];
+            const values = [user_id, name, id];
             console.log(values);
             db.query(query, values, (error, results) => {
                 if (error) {
@@ -89,7 +89,11 @@ const SetRepository = {
      */
     getSetIdsByUserId: (userId) => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT set_id FROM sets WHERE user_id = ?'; // Assumes there's a `user_id` column in `sets` table
+        const query = `SELECT s.set_id, s.name, COUNT(c.card_id) AS count 
+                        FROM sets s
+                        LEFT JOIN cards c ON s.set_id = c.set_id
+                        WHERE s.user_id = ?
+                        GROUP BY s.set_id, s.name`; // Assumes there's a `user_id` column in `sets` table
         
         db.query(query, [userId], (error, results) => {
         if (error) {
@@ -97,7 +101,7 @@ const SetRepository = {
         }
 
         // Map the results to only include the `id` field for each set
-        const setIds = results.map(row => row.set_id);
+        const setIds = results.map(row => new Set({id: row.set_id, name: row.name, count: row.count}));
         resolve(setIds);
         });
     });

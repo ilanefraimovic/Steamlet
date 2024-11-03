@@ -1,7 +1,7 @@
 class LoggedInUser{
     constructor(body){
         this.userId = body.userId;
-        this.setIds = body.setIds
+        this.sets = body.sets
     }
 }
 module.exports = LoggedInUser;

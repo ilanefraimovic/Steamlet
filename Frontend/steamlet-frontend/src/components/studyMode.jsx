@@ -43,3 +43,13 @@ const StudyMode = () => {
 };
 
 export default StudyMode;
+
+/*
+<div className="card-display flex">
+                    {cards.length > 0 && (
+                        <div className="current-card">
+                            {cards[currentIndex]} {}
+                        </div>
+                    )}
+                </div>
+                */
