@@ -7,7 +7,7 @@ import StudyPage from './pages/studyPage';
 
 function App() {
   return (
-      <StudyPage />
+      <MatchPage />
   );
 }
 

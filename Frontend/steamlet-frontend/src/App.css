@@ -29,6 +29,75 @@ html, body {
   color: white;
 }
 
+.matchingGame {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 3px;
+    justify-content: center;
+    max-width: 800px;
+    padding-left: 50px;
+    margin-left: 20px; /* Adjust this value to offset right */
+    margin-right: auto;
+}
+
+.matchingGameContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  padding-right: 100px;
+}
+
+.cardContent {
+    padding: 38px; /* Adds space around the text */
+    word-wrap: break-word; /* Ensures long words wrap within the padding */
+    margin: 0; /* Removes default margin */
+    color: black; 
+}
+
+.cardMatch {
+    width: 200px;
+    height: 120px;
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    background-size: cover;
+    background-position: center;
+    margin: 5px; /* Control space around the card */
+    font-size: 10px; 
+}
+
+.image-content {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the button area */
+    display: block;
+}
+
+
+.cardMatch2 {
+    padding: 10px; /* Adjust padding for desired space inside each card */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; /* For better readability on the image background */
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    aspect-ratio: 2 / 3; /* Maintains a 2:3 aspect ratio */
+}
+
+.cardMatch:hover {
+    transform: scale(1.05);
+}
+
+
 .App-link {
   color: #61dafb;
 }
