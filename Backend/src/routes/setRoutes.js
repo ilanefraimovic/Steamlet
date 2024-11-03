@@ -6,12 +6,12 @@ const SetController = require('../controllers/setController');
 // Example routes
 router.get('/', SetController.getAllSets);
 
-router.get('/:id', SetController.getAllSets);
+router.get('/:id', SetController.getSetById);
 
 router.post('/create', SetController.createSet);
 
 router.put('/update/:id', SetController.updateSet);
 
-router.delete('/delete/:id', SetController.deleteSet);
+router.delete('/delete', SetController.deleteSet);
 
 module.exports = router;

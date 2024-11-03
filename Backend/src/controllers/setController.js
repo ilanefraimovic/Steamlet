@@ -58,13 +58,17 @@ const SetController = {
     },
     deleteSet: async (req, res) => {
         try {
-            const { setId } = req.body;
-    
-            if(!setId){
+            res.json(true);
+            const { id } = req.body;
+          console.log(req.body);
+            //console.log(req.params);
+        console.log(id);
+
+            if(!id){
                 throw new Error("SetId is required");
             }
                 
-            const id = await SetService.deleteSet(new Set({id: setId}));
+            const rowsDeleted = await SetService.deleteSet({id});
             res.json(id);
         } catch (error) {
             res.status(500).json({ error: error.message });

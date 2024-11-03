@@ -27,7 +27,7 @@ const SetRepository = {
                     return reject(error);
                 }
 
-                // Assuming 'id' is unique, we expect one result or none
+        
                 const set = results.length > 0 ? new Set(results[0]) : null;
                 resolve(set);
             });
@@ -66,10 +66,11 @@ const SetRepository = {
             });
         });
     },
+
     deleteSet: (setData) => {
       return new Promise((resolve, reject) => {
         const query = 'DELETE FROM sets WHERE id = ?';
-        
+
         db.query(query, [setData.id], (error, results) => {
           if (error) {
             return reject(error); // Reject promise on error

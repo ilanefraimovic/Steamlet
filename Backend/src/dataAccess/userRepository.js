@@ -50,8 +50,7 @@ const UserRepository = {
       db.query(query, [userData.id], (error, results) => {
         if (error) {
           return reject(error); // Reject promise on error
-        }
-        
+        }       
         // Check if a row was deleted
         if (results.affectedRows === 0) {
           return reject(new Error('User not found')); // Reject if no rows affected

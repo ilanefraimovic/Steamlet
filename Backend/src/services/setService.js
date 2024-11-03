@@ -42,9 +42,8 @@ const SetService = {
 
   deleteSet: async (setData) => {
     try {
-        // Save the set using the repository
-        const newSetId = await SetRepository.deleteSet(setData);
-        return newSetId;
+        const rowsDeleted  = await SetRepository.deleteSet(setData);
+        return rowsDeleted;
     } catch (error) {
         throw error;
     }
