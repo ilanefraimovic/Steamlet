@@ -3,29 +3,26 @@ import axios from "axios";
 import { useUser } from "../UserContext";
 const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
     const [popupState, setPopupState] = useState("NAME_SET");
+    const [responseSetID, setResponseSetID] = useState(null); 
     const setNameRef = useRef(null);
     const termRef = useRef(null);
     const definitionRef = useRef(null);
-    let createResponse;
+    const userId = localStorage.getItem('userId');
 
-    const handleCreate = () => {
+    const handleCreate = async () => {
         const setNameValue = setNameRef.current.value;
         if (setNameValue) {
-            const pushSetToDB = async () => {
             try {
-                const {userId } = useUser;
                 const requestBody = {
                     name: setNameValue, 
-                    user_id: {userId},
+                    user_id: userId,
                 };
-
             const response = await axios.post('http://localhost:3000/api/v1/sets/create', requestBody); // Use POST with a body
-            createResponse = response;
+            setResponseSetID(response.data.setId);
+            console.log("createResponse: ", responseSetID);
             } catch (error) {
                 console.error("Error creating set:", error);
             }
-        };
-            pushSetToDB();
             onSetPush(setNameValue);
             setPopupState("ADD_CARD");
             setNameRef.current.value = '';
@@ -35,17 +32,18 @@ const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
     const handleCardAdded = () => {
         const term = termRef.current.value;
         const definition = definitionRef.current.value;
-        if (term && definition && createResponse) {
+        console.log("setID, term, def = ", responseSetID, term, definition);
+        if (term && definition && responseSetID) {
             const pushCardToDB = async () => {
             try {
                 const requestBody = {
-                    setId:{createResponse}, 
-                    term: {term},
-                    definition:{definition}
+                    setId:responseSetID, 
+                    term: term,
+                    definition:definition
                 };
                 const response = await axios.post('http://localhost:3000/api/v1/cards/add', requestBody); // Use POST with a body
             } catch (error) {
-                console.error("Error creating set:", error);
+                console.error("Error adding card", error);
             }
         };
             pushCardToDB();

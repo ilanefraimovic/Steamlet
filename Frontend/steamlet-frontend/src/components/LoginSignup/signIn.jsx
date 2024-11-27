@@ -24,6 +24,7 @@ const SignIn = ({ toggleForm }) => {
                 console.log('Login successful:', resultAction.payload);
     
                 if (resultAction.payload.userId) {
+                    console.log("userid from sign in: ", resultAction.payload.userId);
                     localStorage.setItem('userId', resultAction.payload.userId);
                     navigate('/home'); // Redirect to home
                 } else {

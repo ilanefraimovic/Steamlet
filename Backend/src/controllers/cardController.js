@@ -13,6 +13,7 @@ const CardController = {
   },
   addCard: async (req, res) => {
     try {
+        console.log("rec body from card controller:")
         console.log(req.body); // This will help you see the incoming data
         const { setId, term, definition} = req.body; 
         if (!setId || !term || !definition) {

@@ -29,12 +29,13 @@ const SetController = {
     createSet: async (req, res) => {
         try {
             console.log(req.body); // This will help you see the incoming data
-            const { user_id, name } = req.body; // Ensure you extract user_id as well
+            const { name, user_id } = req.body; // Ensure you extract user_id as well
             if (!user_id || !name) {
                 throw new Error("User ID and name are required");
             }
     
             const newSet = new Set({ user_id, name });
+            console.log("---------------------------------")
             console.log(newSet)
             const setId = await SetService.createSet(newSet);
             res.json({ setId });
