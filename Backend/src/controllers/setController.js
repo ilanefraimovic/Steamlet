@@ -27,7 +27,7 @@ const SetController = {
         }
     },
 
-    getSetByuserId: async (req, res) => {
+    getSetsByuserId: async (req, res) => {
         try {
             const userId = req.params.userId;
             const sets = await SetService.getSetsByuserId(userId);
@@ -36,7 +36,9 @@ const SetController = {
                 return res.status(404).json({ error: "Sets not found" });
             }
 
-            res.json(sets);
+            const response_ = (Array.isArray(sets) ? sets : sets ? [sets] : [] )
+
+            res.json(response_);
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: error.message });
@@ -45,6 +47,7 @@ const SetController = {
 
     createSet: async (req, res) => {
         try {
+            console.log("--------");
             console.log(req.body); // This will help you see the incoming data
             const { name, user_id } = req.body; // Ensure you extract user_id as well
             if (!user_id || !name) {

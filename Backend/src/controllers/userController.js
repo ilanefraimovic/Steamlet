@@ -41,6 +41,7 @@ const UserController = {
   },
   loginUser: async (req, res) => {
     try {
+        console.log("--------");
         const {userName, password} = req.body;
         if(!userName || !password){
             throw new Error("Username and Password are required");
