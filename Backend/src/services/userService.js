@@ -67,8 +67,7 @@ const UserService = {
             const userId = await UserRepository.loginUser(user);
 
             //Retrieve the set ids affiliated with the user
-            const sets = await SetRepository.getSetIdsByUserId(userId);
-            return new LoggedInUser({userId: userId, sets: sets});
+            return new LoggedInUser({userId: userId});
         } catch (error) {
             throw error;
         }

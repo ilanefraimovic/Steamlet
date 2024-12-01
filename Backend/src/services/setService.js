@@ -21,6 +21,16 @@ const SetService = {
         }
     },
 
+    getSetsByuserId: async (userId) => {
+        try {
+            const sets = SetRepository.getSetsByUserId(userId);
+            if (!sets) throw new Error('Sets not found');
+            return sets;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     createSet: async (setData) => {
         try {
             const newSetId = await SetRepository.createSet(setData);

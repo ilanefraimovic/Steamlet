@@ -19,14 +19,12 @@ const SetRepository = {
     },
     getSetById: (id) => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT * FROM sets WHERE id = ?';
+            const query = 'SELECT * FROM sets WHERE set_id = ?';
             db.query(query, [id], (error, results) => {
                 if (error) {
                     console.log(error);
                     return reject(error);
-                }
-
-        
+                } 
                 const set = results.length > 0 ? new Set(results[0]) : null;
                 resolve(set);
             });
@@ -86,26 +84,33 @@ const SetRepository = {
     /**
      * Retrieves a list of set IDs associated with a given user ID.
      * @param {string} userId - The ID of the user.
-     * @returns {Promise<number[]>} A promise that resolves to an array of set IDs.
+     * @returns {Promise<Set[]>} A promise that resolves to an array of sets.
      */
-    getSetIdsByUserId: (userId) => {
-    return new Promise((resolve, reject) => {
-        const query = `SELECT s.set_id, s.name, COUNT(c.card_id) AS count 
-                        FROM sets s
-                        LEFT JOIN cards c ON s.set_id = c.set_id
-                        WHERE s.user_id = ?
-                        GROUP BY s.set_id, s.name`; // Assumes there's a `user_id` column in `sets` table
+    getSetsByUserId: (userId) => {
+        return new Promise((resolve, reject) => {
+            const query = `
+                SELECT s.set_id AS id, s.user_id, s.name, MAX(s.create_date) AS date, COUNT(c.card_id) AS count 
+                FROM sets s
+                LEFT JOIN cards c ON s.set_id = c.set_id
+                WHERE s.user_id = ?
+                GROUP BY s.set_id, s.user_id, s.name`;
         
-        db.query(query, [userId], (error, results) => {
-        if (error) {
-            return reject(error); // Reject promise on error
-        }
-
-        // Map the results to only include the `id` field for each set
-        const setIds = results.map(row => new Set({id: row.set_id, name: row.name, count: row.count}));
-        resolve(setIds);
+            db.query(query, [userId], (error, results) => {
+                if (error) {
+                    return reject(error); // Reject the promise on error
+                }
+        
+                // Map results into `Set` objects
+                const sets = results.map(row => new Set({
+                    id: row.id,
+                    user_id: row.user_id,
+                    name: row.name,
+                    date: row.date, // Make sure your query includes `date`
+                    count: row.count
+                }));
+                resolve(sets);
+            });
         });
-    });
     }
     
 };

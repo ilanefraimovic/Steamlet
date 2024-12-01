@@ -10,6 +10,7 @@ const SignUp = ({ toggleForm }) => {
         e.preventDefault();
 
         try {
+            console.log("--")
             const response = await axios.post('http://localhost:3000/api/v1/users/create', { // Replace with your actual API endpoint
                 userName: username,
                 password: password,
@@ -20,6 +21,7 @@ const SignUp = ({ toggleForm }) => {
             // Directly toggle to sign-in form
             toggleForm(); // Switch to the sign-in form
         } catch (error) {
+            console.log(error)
             if (error.response) {
                 // If the server responded with a status code outside of the 2xx range
                 setErrorMessage(error.response.data.error || 'Error creating user');
