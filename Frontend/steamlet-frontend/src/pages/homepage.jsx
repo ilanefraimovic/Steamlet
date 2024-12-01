@@ -5,10 +5,12 @@ import CreateSetPopUp from "../components/CreateSetPopUp"
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setSetId } from '../features/setsSlice';
+import Set from '../classes/Set';
 
 
 const HomePage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [sets, setSets] = useState([/* get sets from cache this is temporary*/ 
         { id: 1, name: 'Workout Set A', count: 5 },
         { id: 2, name: 'Workout Set B', count: 8 },
@@ -25,24 +27,23 @@ const HomePage = () => {
     
     const fetchSets = async () => {
         try {
-            const requestBody = {
-                // Include any data you need to send to the server
-                userId: 123, // Example field
-                // Add more fields as necessary
-            }   
-            const response = await axios.post('http://localhost:3000/api/v1/sets', requestBody); // Use POST with a body
-            const fetchedSets = response.data.map(set => new Set(set.numberOfCards, set.setName, set.listOfCards));
+            const userID = localStorage.getItem('userId');
+            const response = await axios.get(`http://localhost:3000/api/v1/sets/${userID}`); // Use POST with a body
+            console.log(response.data);
+            const fetchedSets = response.data.map(set => 
+                new Set(set.count, set.date, set.id, set.name, set.user_id)
+            );
+            console.log(fetchedSets);
             setSets(fetchedSets);
         } catch (error) {
             console.error("Error fetching sets:", error);
         }
     };
-
-    fetchSets();
-
     useEffect(() => {
-
+        fetchSets();
     }, []);
+
+
     const exitHandler = () => {
         // Logic to handle exiting the page or performing an action
         console.log("Exiting...");
@@ -63,9 +64,8 @@ const HomePage = () => {
 
     const HandleSetSelected = (setID) => {
         //get and cache set
-        const dispatch = useDispatch();
         dispatch(setSetId(setID)); // Dispatch action to set the selected set ID
-        //navigate('/study');
+        navigate('/study');
     }
 
     return (
@@ -74,7 +74,7 @@ const HomePage = () => {
                 <p>New Set</p>
             </button>
           {sets.map((set) => (
-            <button key={set.id} className="set-item" onClick={HandleSetSelected(set.id)}>
+            <button key={set.id} className="set-item" onClick={() => HandleSetSelected(set.id)}>
               <h2>{set.name}</h2>
               <p>Count: {set.count}</p>
             </button>

@@ -26,6 +26,23 @@ const SetController = {
             res.status(500).json({ error: error.message });
         }
     },
+
+    getSetByuserId: async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const sets = await SetService.getSetsByuserId(userId);
+
+            if (!sets) {
+                return res.status(404).json({ error: "Sets not found" });
+            }
+
+            res.json(sets);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: error.message });
+        }
+    },
+
     createSet: async (req, res) => {
         try {
             console.log(req.body); // This will help you see the incoming data
