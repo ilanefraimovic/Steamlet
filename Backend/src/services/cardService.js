@@ -23,6 +23,7 @@ const CardService = {
 
   addCard: async (cardData) => {
     try {
+      console.log("card data from card service: " + JSON.stringify(cardData));
       const newCardId = await CardRepository.createCard(cardData);
       return newCardId;
     } catch (error) {

@@ -75,6 +75,26 @@ html, body {
     text-align: center;
 }
 
+.index-card {
+}
+
+.index-card-content {
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensures content stays within the card */
+  width: 80%;
+  height: 600px; /* Ensures the card is large */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff; /* Makes text visible on the image */
+  font-size: 2rem; /* Adjust as needed for visibility */
+  font-weight: bold; /* Bold text for readability */
+  overflow: hidden; /* Prevents content overflow */
+}
+
+
 
 .matchingGame {
     margin-top: 20px;

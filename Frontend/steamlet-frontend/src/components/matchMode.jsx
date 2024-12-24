@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Card from "../components/Card";
+import MatchCard from "../components/MatchCard";
 import backButton from "../components/backButton";
 import Set from "../classes/Set";
-import "../App.css";
 import SteampunkButton from './steamPunkButton';
 import { useSelector } from 'react-redux';
 
@@ -71,7 +70,7 @@ const MatchMode = () => {
             <div className="matchingGameContainer">
                 <div className="matchingGame">
                     {cardsToRender.map((card, index) => (
-                        <Card
+                        <MatchCard
                             key={index}
                             onMatch={handleTermClick}
                             content={card}
