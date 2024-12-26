@@ -132,19 +132,18 @@ html, body {
 }
 
 .cardContent {
-    background: rgba(0, 0, 0, 0.1); 
     position: relative;
 }
 
 .card-text {
     z-index: 2; /* Ensure the text is on top */
     text-align: center;
-    height: 75%; /* Adjust height as needed */
-    width: 90%; /* Adjust width as needed */
-    padding-left: 20px; /* Add padding to the left */
-    padding-right: 20px; /* Add padding to the right */
-    padding-top: 30px; /* Optional: adjust top padding */
-    padding-bottom: 30px; /* Optional: adjust bottom padding */
+    height: 100%; /* Adjust height as needed */
+    width: 100%; /* Adjust width as needed */
+    padding-left: 0px; /* Add padding to the left */
+    padding-right: 0px; /* Add padding to the right */
+    padding-top: 0px; /* Optional: adjust top padding */
+    padding-bottom: 0px; /* Optional: adjust bottom padding */
     word-wrap: break-word; /* Ensure long words break and wrap to the next line */
     overflow-wrap: break-word; /* Ensure wrapping for long words */
     box-sizing: border-box;
