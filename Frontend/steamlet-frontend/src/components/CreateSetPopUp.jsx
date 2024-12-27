@@ -33,6 +33,7 @@ const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
         const term = termRef.current.value;
         const definition = definitionRef.current.value;
         console.log("setID, term, def = ", responseSetID, term, definition);
+        //max char limit 324 NEED TO IMPLEMENT
         if (term && definition && responseSetID) {
             const pushCardToDB = async () => {
             try {

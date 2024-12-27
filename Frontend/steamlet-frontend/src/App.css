@@ -102,24 +102,42 @@ html, body {
     position: relative;
     overflow: hidden;
     background-image: url('./resources/Assets/gears.gif'); /* Use your GIF path */
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     height: 75%; /* Adjust height as needed */
-    max-width: 1300px;
-    width: 90%; /* Adjust width as needed */
+    max-width: 1500px;
+    width: 100%; /* Adjust width as needed */
     display: flex;
     justify-content: center;
     align-items: center;
     color: black; /* Text color for visibility on the GIF */
     font-size: 40px; /* Adjust font size as needed */
-    padding: 20px;
     cursor: pointer;
     word-wrap: break-word; /* Ensure long words wrap properly */
     overflow-wrap: break-word; /* Another property to help with word wrapping */
     text-align: center;
     box-sizing: border-box; 
 }
+
+.left-button, .right-button {
+  position: relative;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  width: 10%; /* Set a width */
+  height: 16.25%; /* Set a height */
+}
+
+.left-button {
+  background-image: url('./resources/Assets/Left_Button-modified.png');
+}
+
+.right-button {
+  background-image: url('./resources/Assets/Right Button-modified.png');
+}
+
 
 .index-card-content::before {
     content: '';
@@ -133,6 +151,11 @@ html, body {
 
 .cardContent {
     position: relative;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
 }
 
 .card-text {
@@ -147,7 +170,6 @@ html, body {
     word-wrap: break-word; /* Ensure long words break and wrap to the next line */
     overflow-wrap: break-word; /* Ensure wrapping for long words */
     box-sizing: border-box;
-
 }
 
 

@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from "react";
-import cardImage from '../resources/cardImage.png'; 
 const StudyCard = ({ content }) => {
     const [currentCardSide, setCurrentCardSide] = useState(true);
 
@@ -13,11 +12,11 @@ const StudyCard = ({ content }) => {
     };
     return (
         <div
-            className={"index-card-content"}
+            className={"flex rounded-md index-card-content"}
             onClick={handleClick}
         >
-            <div className={"cardContent"}>
-                <p className={"card-text"}>
+            <div className={"cardContent flex text-[2.5vw] text-[2.5vh] justify-center items-center"}>
+                <p className="text-center text-[2.5vw] text-[2.5vh]">
                     {currentCardSide ? content.term : content.definition}
                 </p>
             </div>
@@ -26,3 +25,4 @@ const StudyCard = ({ content }) => {
 };
 
 export default StudyCard;
+//"text-[40px] text-center text-[2.5vw] text-[2.5vh]"
