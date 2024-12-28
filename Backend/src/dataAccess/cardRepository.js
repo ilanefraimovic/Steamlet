@@ -20,16 +20,19 @@ const CardRepository = {
 
   getCardById: (id) => {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM cards WHERE id = ?', [id], (error, results) => {
+      console.log("retrieving cards, set id : " + id);
+      db.query('SELECT * FROM cards WHERE set_id = ?', [id], (error, results) => {
         if (error) return reject(error);
         if (results.length === 0) return resolve(null);
 
-        const card = new card(results[0].id, results[0].set_id, results[0].term,results[0].definition, results[0].date);
-        resolve(card);
+        const cards = results.map(row => new Card(row));
+        console.log("results from card get api: " + cards);
+        resolve(cards);
       });
     });
   },
   createCard: (cardData) => {
+    console.log("card data from card repository: " + JSON.stringify(cardData));
     return new Promise((resolve, reject) => {
       const query = `
         INSERT INTO cards (set_id, term, definition, create_date) 

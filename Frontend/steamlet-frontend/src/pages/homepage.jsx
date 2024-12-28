@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import "../App.css"
 import CreateSetPopUp from "../components/CreateSetPopUp"
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSetId } from '../features/setsSlice';
+import { setCards } from '../features/cardsSlice';
+import Card from '../classes/Card';
 import Set from '../classes/Set';
 
 
@@ -33,7 +35,6 @@ const HomePage = () => {
             const fetchedSets = response.data.map(set => 
                 new Set(set.count, set.date, set.id, set.name, set.user_id)
             );
-            console.log(fetchedSets);
             setSets(fetchedSets);
         } catch (error) {
             console.error("Error fetching sets:", error);
@@ -60,21 +61,42 @@ const HomePage = () => {
     const closePopup = () => {
         console.log("Closing popup..."); 
         setIsPopupVisible(false);
+        fetchSets();
     };
 
     const HandleSetSelected = (setID) => {
         //get and cache set
         dispatch(setSetId(setID)); // Dispatch action to set the selected set ID
+        const fetchCards = async (setId) => {
+            try {
+                const requestBody = {
+                    setId: setId 
+                };
+                console.log("set id from frontend card call: " + requestBody.setId);
+
+                const response = await axios.post('http://localhost:3000/api/v1/cards/userCards', requestBody); // Use POST with a body
+                const fetchedCards = response.data.map(card => ({
+                    term: card.term,
+                    definition: card.definition,
+                }));
+                console.log("fetched cards: " + JSON.stringify(fetchedCards));
+                dispatch(setCards(fetchedCards));
+
+            } catch (error) {
+                console.error("Error fetching cards:", error);
+            }
+        };
+        fetchCards(setID);
         navigate('/study');
     }
 
     return (
-        <div className="sets-container">
-            <button className="set-item" onClick={handleNewSet}>
+        <div className="bg-darkerBrown sets-container">
+            <button className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={handleNewSet}>
                 <p>New Set</p>
             </button>
           {sets.map((set) => (
-            <button key={set.id} className="set-item" onClick={() => HandleSetSelected(set.id)}>
+            <button key={set.id} className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={() => HandleSetSelected(set.id)}>
               <h2>{set.name}</h2>
               <p>Count: {set.count}</p>
             </button>

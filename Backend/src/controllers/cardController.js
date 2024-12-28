@@ -11,6 +11,18 @@ const CardController = {
       res.status(500).json({ error: error.message });
     }
   },
+  getAllCardsById: async (req, res) => {
+    try {
+      const setId = req.body.setId;
+      console.log("set id from cardController: " + setId);
+      const cards = await CardService.getCardById(setId);
+      res.json(cards);
+      console.log("cards: " + cards[0].term);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+      console.log(error.message);
+    }
+  },
   addCard: async (req, res) => {
     try {
         console.log("rec body from card controller:")
@@ -20,7 +32,7 @@ const CardController = {
             throw new Error("Set ID, term, and definition are required");
         }
 
-        const newCard = new Card({ setId: setId, term: term, definition: definition });
+        const newCard = new Card({ set_id: setId, term: term, definition: definition });
 
         const cardId = await CardService.addCard(newCard);
         res.json({ cardId });
