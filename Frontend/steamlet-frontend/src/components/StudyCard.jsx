@@ -12,14 +12,15 @@ const StudyCard = ({ content }) => {
     };
     return (
         <div
-            className={"flex rounded-md index-card-content"}
+            className={"flex index-card-content"}
             onClick={handleClick}
         >
             <div className={"cardContent flex text-[2.5vw] text-[2.5vh] justify-center items-center"}>
-                <p className="text-center text-[2.5vw] text-[2.5vh]">
+                <p className="smythe-regular text-center text-[2.5vw] text-[2.5vh]">
                     {currentCardSide ? content.term : content.definition}
                 </p>
             </div>
+
         </div>
     );
 };

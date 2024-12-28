@@ -27,7 +27,7 @@ const StudyMode = () => {
     };
 
   return (
-    <div className="extra-section w-5/6 h-full bg-gray-100 flex justify-between items-center">
+    <div className="background-content extra-section w-5/6 h-full bg-gray-100 flex justify-between items-center">
       <button onClick={leftButton} className="left-button ml-4"> </button>
       <div className="flex justify-center items-center w-[75%] h-full">
         <StudyCard

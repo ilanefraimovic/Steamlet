@@ -91,12 +91,12 @@ const HomePage = () => {
     }
 
     return (
-        <div className="sets-container">
-            <button className="set-item" onClick={handleNewSet}>
+        <div className="bg-darkerBrown sets-container">
+            <button className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={handleNewSet}>
                 <p>New Set</p>
             </button>
           {sets.map((set) => (
-            <button key={set.id} className="set-item" onClick={() => HandleSetSelected(set.id)}>
+            <button key={set.id} className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={() => HandleSetSelected(set.id)}>
               <h2>{set.name}</h2>
               <p>Count: {set.count}</p>
             </button>
