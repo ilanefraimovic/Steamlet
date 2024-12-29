@@ -12,15 +12,12 @@ const MatchMode = () => {
     const [selectedTerm, setSelectedTerm] = useState(null);
     const [cardsToRender, setCardsToRender] = useState([]);
 
-    const HandleGameOver = () => {
-        setSubsetCards([]); // Clear cached subset
-        setSelectedTerm(null);
-        setCardsToRender(GetCardsAndPullsix(cachedCards)); // Reset cards for new game
-    };
+    useEffect(() => {
+        setCardsToRender(GetCardsAndPullsix(cachedCards));
+    }, [cachedCards]);
 
-    // Function to get and shuffle 6 cards
     const GetCardsAndPullsix = (cards) => {
-        const subset = cards
+        const subset = [...cards]
             .sort(() => Math.random() - 0.5) // Shuffle the array
             .slice(0, 6); // Select 6 random cards
 
@@ -33,9 +30,9 @@ const MatchMode = () => {
         return doubledCards;
     };
 
-    useEffect(() => {
-        setCardsToRender(GetCardsAndPullsix(cachedCards));
-    }, [cachedCards]);
+
+    // Function to get and shuffle 6 cards
+
 
     const handleTermClick = (cardContent) => {
         if (!selectedTerm) {
@@ -63,6 +60,12 @@ const MatchMode = () => {
                 setSelectedTerm(null); // Reset selected term if no match
             }
         }
+    };
+
+    const HandleGameOver = () => {
+        setSubsetCards([]); // Clear cached subset
+        setSelectedTerm(null);
+        setCardsToRender(GetCardsAndPullsix(cachedCards)); // Reset cards for new game
     };
 
     if (cardsToRender.length !== 0) {

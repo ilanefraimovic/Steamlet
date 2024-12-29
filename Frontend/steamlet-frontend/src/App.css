@@ -65,12 +65,25 @@ html, body {
 }
 
 .popup-content {
-    background: #fff;
     padding: 20px;
     border-radius: 8px;
-    max-width: 400px;
+    max-width: 1000px;
     width: 90%;
+    height: 50%;
     text-align: center;
+}
+
+.popup-button {
+  padding: 10px;
+  flex: 1;
+  height: 50%;
+  border-radius: 10px;
+}
+
+.popup-button-container {
+  display: flex;
+  gap: 10px;
+  height: 75%;
 }
 
 .index-card {
@@ -178,20 +191,20 @@ html, body {
 
 
 .cardMatch {
-    width: 200px;
-    height: 120px;
+    width: 330px;
+    height: 192px;
     display: block;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: black;
     border-radius: 4px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
     background-size: cover;
     background-position: center;
     margin: 5px; /* Control space around the card */
-    font-size: 10px; 
+    font-size: 20px; 
 }
 
 .image-content {

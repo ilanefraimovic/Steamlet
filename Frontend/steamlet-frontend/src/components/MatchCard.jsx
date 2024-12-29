@@ -1,13 +1,15 @@
 import React from "react";
-import cardImage from '../resources/cardImage.png'; 
+import cardImage from '../resources/Assets/gears.gif'
 const MatchCard = ({ content, onMatch, isMatchable, className }) => {
-    const FlipCard = () => {
-        // Implement the logic to flip the card
-    };
+    const handleClick = () => {
+            if (onMatch) {
+                onMatch(content);
+            }
+        };
     return (
         <div
             className={`${className}`}
-            onClick={FlipCard}
+            onClick={handleClick}
             style={{
                 backgroundImage: `url(${cardImage})`, // Replace with your actual image path
                 backgroundSize: "cover",
@@ -21,4 +23,3 @@ const MatchCard = ({ content, onMatch, isMatchable, className }) => {
 };
 
 export default MatchCard;
-

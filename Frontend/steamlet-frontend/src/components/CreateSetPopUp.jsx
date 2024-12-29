@@ -58,19 +58,19 @@ const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
     if (popupState === "NAME_SET") {
         return (
             <div className="popup-overlay">
-                <div className="popup-content">
-                    <h2>Enter Set Name</h2>
+                <div className="bg-turquoise popup-content">
+                    <p style={{fontSize: "48px", marginBottom: "10px"}}>Enter Set Name</p>
                     <input
                         type="text"
                         placeholder="Set Name"
                         ref={setNameRef}
-                        style={{ padding: "8px", width: "100%", marginBottom: "10px" }}
+                        style={{ padding: "8px", width: "100%", marginBottom: "70px" }}
                     />
-                    <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
-                        <button onClick={handleCreate} style={{ padding: "10px", flex: 1 }}>
+                    <div className="popup-button-container">
+                        <button className="bg-paleYellow hover:bg-darkerpaleYellow popup-button" onClick={handleCreate}>
                             Create
                         </button>
-                        <button onClick={onClose} style={{ padding: "10px", flex: 1 }}>
+                        <button className="bg-paleYellow hover:bg-darkerpaleYellow popup-button" onClick={onClose}>
                             Close
                         </button>
                     </div>
@@ -80,8 +80,8 @@ const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
     } else if (popupState === "ADD_CARD") {
         return (
             <div className="popup-overlay">
-                <div className="popup-content">
-                    <h2>Enter Term and Definition</h2>
+                <div className="bg-turquoise popup-content">
+                    <p style={{fontSize: "48px", marginBottom: "10px"}}>Enter Term and Definition</p>
                     <input
                         type="text"
                         placeholder="Term"
@@ -94,11 +94,11 @@ const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
                         ref={definitionRef}
                         style={{ padding: "8px", width: "100%", marginBottom: "10px" }}
                     />
-                    <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
-                        <button onClick={handleCardAdded} style={{ padding: "10px", flex: 1 }}>
+                    <div className="popup-button-container">
+                        <button className="bg-paleYellow hover:bg-darkerpaleYellow popup-button" onClick={handleCardAdded}>
                             Add Card
                         </button>
-                        <button onClick={onClose} style={{ padding: "10px", flex: 1 }}>
+                        <button onClick={onClose} className="bg-paleYellow hover:bg-darkerpaleYellow popup-button">
                             Close
                         </button>
                     </div>
