@@ -91,17 +91,26 @@ const HomePage = () => {
     }
 
     return (
-        <div className="bg-darkerBrown sets-container">
-            <button className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={handleNewSet}>
-                <p>New Set</p>
-            </button>
-          {sets.map((set) => (
-            <button key={set.id} className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={() => HandleSetSelected(set.id)}>
-              <h2>{set.name}</h2>
-              <p>Count: {set.count}</p>
-            </button>
-          ))}
-          {isPopupVisible && <CreateSetPopUp onClose={closePopup} onSetPush={pushSet} state={popUpState} onAddCard={pushSet}/>}
+        <div className="homepage-container">
+            <div className="header-bar bg-darkerBrown">
+                <p className="title">Steamlet!</p>
+                <p className="title2">Your Sets:</p>
+                <button className="friends-button bg-turquoise">Friends</button>
+                <button className="profile-button bg-turquoise">Profile</button>
+                <button className="logout-button bg-turquoise">Log Out</button>
+            </div>
+            <div className="sets-container">
+                <button className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={handleNewSet}>
+                    <p>New Set (+) </p>
+                </button>
+              {sets.map((set) => (
+                <button key={set.id} className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={() => HandleSetSelected(set.id)}>
+                  <h2>{set.name}</h2>
+                  <p>Count: {set.count}</p>
+                </button>
+              ))}
+              {isPopupVisible && <CreateSetPopUp onClose={closePopup} onSetPush={pushSet} state={popUpState} onAddCard={pushSet}/>}
+            </div>
         </div>
     );
 };

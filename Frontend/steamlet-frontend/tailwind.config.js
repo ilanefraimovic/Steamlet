@@ -7,7 +7,7 @@ module.exports = {
     extend: {},
     colors:{
       turquoise:'rgb(128,172,170)',
-      darkerBrown:'rgb(92,59,27)',
+      darkerBrown:'rgb(71,33,18)',
       paleYellow:'rgb(253,217,120)',
       darkerpaleYellow:'rgb(223,187,90)',
       burgundy:'rgb(110,47,59)',
