@@ -27,15 +27,20 @@ const StudyMode = () => {
     };
 
   return (
-    <div className="background-content extra-section w-5/6 h-full bg-gray-100 flex justify-between items-center">
-      <button onClick={leftButton} className="left-button ml-4"> </button>
-      <div className="flex justify-center items-center w-[75%] h-full">
-        <StudyCard
-          content={cards[currentIndex] || "loading"}
-        />
+    <div className="study-mode-container w-5/6 h-full">
+      <div className="header-bar2 w-5/6 bg-darkerBrown">
+        <p className="title3 text-turquoise">Steamlet! </p>
       </div>
-          <button onClick={rightButton} className="right-button mr-4"> </button>
-    </div>
+      <div className="background-content w-full h-full flex justify-between items-center">
+        <button onClick={leftButton} className="left-button ml-4"> </button>
+        <div className="flex justify-center items-center w-[75%] h-full">
+          <StudyCard
+            content={cards[currentIndex] || {term: "loading...", definition: "loading..."}}
+          />
+        </div>
+            <button onClick={rightButton} className="right-button mr-4"> </button>
+      </div>
+  </div>
   );
 };
 

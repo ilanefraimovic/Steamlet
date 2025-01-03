@@ -28,12 +28,12 @@ html, body {
   color: white;
 }
 
-
 .homepage-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+  min-height: 100vh;
 }
 
 .header-bar {
@@ -41,7 +41,7 @@ html, body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100px; /* Adjust height as needed */
+  height: 105px; /* Adjust height as needed */
   z-index: 1; /* Ensures it's behind the text */
   display: flex;
   flex-direction: row;
@@ -49,26 +49,33 @@ html, body {
   padding: 0 16px; /* Optional: Add some padding for layout */
 }
 
-/* SetsDisplay.css */
-.sets-container {
-  background-image: url('./resources/Assets/Crazy\ BackGround.jpg');
-  background-position: center;
+
+.header-bar2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 83.4%;
+  height: 105px; /* Adjust height as needed */
+  z-index: 1; /* Ensures it's behind the text */
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  overflow-y: auto;
-  margin-top: 90px;
-  height: 100vh;
-  width: 100%;
-  padding: 10px;
-  position: relative;
-  flex: 1;
+  padding: 0 16px; /* Optional: Add some padding for layout */
+  left: 16.6%; /* Start it at 50% of the container width */
+}
+
+.study-mode-container {
+  display: flex;
+  flex-direction: row;
+  
 }
 
 .background-content {
-
   background-image: url('./resources/Assets/Turquoise_hat.webp');
+  width: 100%;
+  height: 100%;
 }
+
 
 .title {
   font-size: 88px;
@@ -86,6 +93,14 @@ html, body {
   position: absolute; /* Positioning will be based on the container */
   left: 50%; /* Start it at 50% of the container width */
   transform: translateX(-50%); /* Center it horizontally by shifting it left by 50% of its own width */
+}
+
+.title3 {
+  font-size: 88px;
+  color: white;
+  margin: 0;
+  z-index: 2; /* Ensures it's above the background */
+  position: absolute;
 }
 
 .friends-button {
@@ -127,8 +142,78 @@ html, body {
   width: 8%;
   border-radius: 10px;
 }
+.sets-container {
+  background-image: url('./resources/Assets/Crazy\ BackGround.jpg');
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  margin-top: 90px;
+  width: 100%;
+  padding: 15px;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+}
+
+.set-item-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: 8px;
+  padding: 10px;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 1.5rem;
+
+}
+
 .set-item {
   color: black;
+  border-radius: 8px;
+  flex: 1;
+  margin: 10px 0;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 1.5rem;
+}
+
+
+.edit-card-item-container {
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  margin-top: 1px;
+  width: 100%;
+  padding: 15px;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+}
+
+.edit-card-item-container2 {
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 95%;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+}
+.edit-card-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
   border-radius: 8px;
   margin: 10px 0;
   padding: 20px;
@@ -137,6 +222,28 @@ html, body {
   text-align: center;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   font-size: 1.5rem;
+}
+
+.edit-icon-button {
+  position: absolute;
+  border-radius: 8px;
+  right: 30px;
+  top: 40%;
+  width: 80px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.delete-icon-button {
+  width: 80px;
+  height: 40px;
+  position: absolute;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  right: 10px;
+  top: 40%;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
 .popup-overlay {
@@ -156,9 +263,11 @@ html, body {
     padding: 20px;
     border-radius: 8px;
     max-width: 1000px;
+    max-height: 50%;
     width: 90%;
     height: 50%;
     text-align: center;
+    overflow-y: auto;
 }
 
 .popup-button {
@@ -174,9 +283,15 @@ html, body {
   height: 75%;
 }
 
-.index-card {
+.edit-card-popup-button {
+  padding: 10px;
+  flex: 1;
+  padding-top: 10px;
+  height: 20%;
+  border-radius: 10px;
+  width: 64.5%;
 }
-
+                        
 
 .matchingGame {
     margin-top: 20px;
@@ -319,7 +434,12 @@ html, body {
 .cardMatch:hover {
     transform: scale(1.05);
 }
-
+.edit-icon-button:hover {
+  transform: scale(1.15);
+} 
+.delete-icon-button:hover {
+  transform: scale(1.15);
+} 
 
 .App-link {
   color: #61dafb;

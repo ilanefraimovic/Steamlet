@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import "../App.css"
 import CreateSetPopUp from "../components/CreateSetPopUp"
+import EditSetPopUp from '../components/EditSetPopUp';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSetId } from '../features/setsSlice';
@@ -23,8 +24,11 @@ const HomePage = () => {
         { id: 20, name: 'Endurance Set', count: 4 },
         { id: 30, name: 'Flexibility Set', count: 5 },
     ]);
-    const [isPopupVisible, setIsPopupVisible] = useState(false);
-    const [popUpState, setPopupState] = useState("NAME_SET");
+    const [isCreatePopupVisible, setIsCreatePopupVisible] = useState(false);
+    const [createPopUpState, setCreatePopupState] = useState("NAME_SET");
+
+    const [isEditPopupVisibile, setIsEditPopupVisibile] = useState(false);
+    const [editPopUpState, setEditPopupState] = useState("EDIT_SET");
 
     
     const fetchSets = async () => {
@@ -45,49 +49,61 @@ const HomePage = () => {
     }, []);
 
 
-    const exitHandler = () => {
-        // Logic to handle exiting the page or performing an action
-        console.log("Exiting...");
+    const fetchCards = async (setId) => {
+        try {
+            const requestBody = {
+                setId: setId 
+            };
+            console.log("set id from frontend card call: " + requestBody.setId);
+            const response = await axios.post('http://localhost:3000/api/v1/cards/userCards', requestBody); // Use POST with a body
+            const fetchedCards = response.data.map(card => ({
+                term: card.term,
+                definition: card.definition,
+            }));
+            console.log("fetched cards: " + JSON.stringify(fetchedCards));
+            dispatch(setCards(fetchedCards));
+        } catch (error) {
+            console.error("Error fetching cards:", error);
+        }
     };
+
+
     const handleNewSet = () => {
-        setPopupState("NAME_SET")
-        setIsPopupVisible(true);
+        setCreatePopupState("NAME_SET")
+        setIsCreatePopupVisible(true);
+    }
+
+    const handleEditSet = () => {
+        setEditPopupState("EDIT_SET");
+        setIsEditPopupVisibile(true);
     }
 
     const pushSet = () => {
         console.log("Pushed Set..."); 
     }
 
-    const closePopup = () => {
+    const closeCreatePopup = () => {
         console.log("Closing popup..."); 
-        setIsPopupVisible(false);
+        setIsCreatePopupVisible(false);
         fetchSets();
+    };
+
+    const closeEditPopup = () => {
+        console.log("Closing popup..."); 
+        setIsEditPopupVisibile(false);
     };
 
     const HandleSetSelected = (setID) => {
         //get and cache set
         dispatch(setSetId(setID)); // Dispatch action to set the selected set ID
-        const fetchCards = async (setId) => {
-            try {
-                const requestBody = {
-                    setId: setId 
-                };
-                console.log("set id from frontend card call: " + requestBody.setId);
-
-                const response = await axios.post('http://localhost:3000/api/v1/cards/userCards', requestBody); // Use POST with a body
-                const fetchedCards = response.data.map(card => ({
-                    term: card.term,
-                    definition: card.definition,
-                }));
-                console.log("fetched cards: " + JSON.stringify(fetchedCards));
-                dispatch(setCards(fetchedCards));
-
-            } catch (error) {
-                console.error("Error fetching cards:", error);
-            }
-        };
         fetchCards(setID);
         navigate('/study');
+    }
+    const HandleEditSetSelected = (setID) => {
+        //get and cache set
+        dispatch(setSetId(setID)); // Dispatch action to set the selected set ID
+        fetchCards(setID);
+        handleEditSet();
     }
 
     return (
@@ -104,12 +120,21 @@ const HomePage = () => {
                     <p>New Set (+) </p>
                 </button>
               {sets.map((set) => (
-                <button key={set.id} className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={() => HandleSetSelected(set.id)}>
-                  <h2>{set.name}</h2>
-                  <p>Count: {set.count}</p>
-                </button>
+                <div key={set.id} className="set-item-container">
+                    <button key={set.id} className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={() => HandleSetSelected(set.id)}>
+                      <h2>{set.name}</h2>
+                      <p>Count: {set.count}</p>
+                    </button>
+                    <button className="bg-burgundy edit-icon-button" onClick={(e) => {
+                        e.stopPropagation();
+                        HandleEditSetSelected(set.id);
+                        }}>
+                        Edit
+                    </button>
+                </div>
               ))}
-              {isPopupVisible && <CreateSetPopUp onClose={closePopup} onSetPush={pushSet} state={popUpState} onAddCard={pushSet}/>}
+              {isCreatePopupVisible && <CreateSetPopUp onClose={closeCreatePopup} onSetPush={pushSet} state={createPopUpState} onAddCard={pushSet}/>}
+              {isEditPopupVisibile && <EditSetPopUp onClose={closeEditPopup} state={editPopUpState} onAddCard={pushSet}/>}
             </div>
         </div>
     );
