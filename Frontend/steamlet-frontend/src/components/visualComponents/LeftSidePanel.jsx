@@ -1,13 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { setCards } from '../../features/cardsSlice';
+import { useDispatch } from 'react-redux';
 
 const LeftSidePanel = ({ buttons = [], onClicks = [] }) => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
   // Back button handler
   const handleBack = () => {
+    dispatch(setCards([]));
     navigate('/home'); // Navigate to the previous page
   };
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import { useUser } from "../UserContext";
+
 const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
     const [popupState, setPopupState] = useState("NAME_SET");
     const [responseSetID, setResponseSetID] = useState(null); 
