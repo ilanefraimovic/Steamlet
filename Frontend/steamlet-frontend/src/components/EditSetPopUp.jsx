@@ -6,15 +6,24 @@ import axios from "axios";
 const EditSetPopUp = ({ onClose, onAddCard }) => {
     const [popupState, setPopupState] = useState("EDIT_SET");
     const [responseSetID, setResponseSetID] = useState(null); 
+    const [setSelected, setSetSelected] = useState(null);
     const cards = useSelector((state) => state.cards); // Access Redux cards cache
     const termRef = useRef(null);
     const definitionRef = useRef(null);
     const userId = localStorage.getItem('userId');
+    const setId = useSelector((state) => state.set.setId); // Access Redux cards cache
+    const setName = useSelector((state) => state.set.setName);
+
+    console.log(popupState);
+    console.log("setid from Edit Pop Up: ", setId);
     
     
     useEffect(() => {
-      console.log("current cards state(cached): " + JSON.stringify(cards, null, 2));
-    }, [cards]);
+        console.log("current cards state(cached): " + JSON.stringify(cards, null, 2));
+        console.log("setId from Redux in EditPopUp:", setId);
+        console.log("setName from Redux in EditPopUp:", setName);
+    }, [cards, setId, setName]); // Ensure this runs when any of these dependencies change
+
 
 
     const handleEditCardPressed = () => {
@@ -25,8 +34,22 @@ const EditSetPopUp = ({ onClose, onAddCard }) => {
         setPopupState("ADD_CARD");
     };
 
-    const handleDeleteSetPressed = () => {
+    const handleDeleteConfirmedPressed = () => {
+        const deleteSet = async (setID) => {
+            try {
+                const response = await axios.delete(`http://localhost:3000/api/v1/sets/delete/${setId}`);
+                console.log(response.data);
+                
+            } catch (error) {
+                console.error("Error deleting set:", error);
+            }
+        };
+        deleteSet(setId);
 
+    };
+
+    const handleDeleteSetPressed = () => {
+        setPopupState("DELETE_WARNING");
     };
 
     const HandleCardSelected = () => {
@@ -43,17 +66,17 @@ const EditSetPopUp = ({ onClose, onAddCard }) => {
                 <div className="bg-turquoise popup-content">
                     <p style={{fontSize: "48px", marginBottom: "10px"}}>Edit Selected Set</p>
                     <div className="popup-button-container">
-                        <button className="bg-paleYellow hover:bg-darkerpaleYellow popup-button" onClick={handleEditCardPressed}>
+                        <button className="bg-paleYellow hover:bg-darkerpaleYellow popup-button2" onClick={handleEditCardPressed}>
                             Edit/Delete A Card
                         </button>
-                        <button onClick={handleAddCardPressed} className="bg-paleYellow hover:bg-darkerpaleYellow popup-button">
+                        <button onClick={handleAddCardPressed} className="bg-paleYellow hover:bg-darkerpaleYellow popup-button2">
                             Add Card To Set
                         </button>
-                        <button onClick={handleDeleteSetPressed} className="bg-burgundy hover:bg-darkerBurgundy popup-button">
+                        <button onClick={handleDeleteSetPressed} className="bg-burgundy hover:bg-darkerBurgundy popup-button2">
                             Delete Set
                         </button>
                     </div>
-                    <button onClick={onClose} className="bg-paleYellow hover:bg-darkerpaleYellow popup-button">
+                    <button onClick={onClose} className="bg-paleYellow hover:bg-darkerpaleYellow edit-card-popup-button">
                         Close
                     </button>
                 </div>
@@ -63,7 +86,7 @@ const EditSetPopUp = ({ onClose, onAddCard }) => {
     else if (popupState === "EDIT_CARD") { 
         return (
             <div className="popup-overlay">
-                <div className="bg-turquoise popup-content">
+                <div className="bg-turquoise popup-content2">
                     <p style={{fontSize: "48px", marginBottom: "10px"}}>Choose A Card To Edit Or Delete</p>
                     <div className="edit-card-item-container">
                       {cards.map((card) => (
@@ -113,6 +136,24 @@ const EditSetPopUp = ({ onClose, onAddCard }) => {
                         </button>
                     </div>
                 </div>
+            </div>
+        )
+    }
+    else if (popupState === "DELETE_WARNING") {
+        return (
+            <div className="popup-overlay">
+                <div className="bg-turquoise popup-content">
+                    <p style={{fontSize: "48px", marginBottom: "10px"}}>Are you sure you want to delete {setName}?</p>
+                    <div className="popup-button-container">
+                        <button className="bg-paleYellow hover:bg-darkerpaleYellow popup-button" onClick={handleDeleteConfirmedPressed}>
+                            Delete
+                        </button>
+                        <button onClick={handleEditCardPressed} className="bg-paleYellow hover:bg-darkerpaleYellow popup-button">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+
             </div>
         )
     }

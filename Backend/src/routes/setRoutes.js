@@ -12,6 +12,6 @@ router.post('/create', SetController.createSet);
 
 router.put('/update/:id', SetController.updateSet);
 
-router.delete('/delete', SetController.deleteSet);
+router.delete('/delete/:setId', SetController.deleteSet);
 
 module.exports = router;

@@ -53,6 +53,7 @@ const SetService = {
   deleteSet: async (setData) => {
     try {
         const rowsDeleted  = await SetRepository.deleteSet(setData);
+        if (!rowsDeleted) throw new Error('Set Not Found');
         return rowsDeleted;
     } catch (error) {
         throw error;

@@ -5,7 +5,7 @@ import CreateSetPopUp from "../components/CreateSetPopUp"
 import EditSetPopUp from '../components/EditSetPopUp';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSetId } from '../features/setsSlice';
+import { setSetId, setSetName } from '../features/setsSlice';
 import { setCards } from '../features/cardsSlice';
 import Card from '../classes/Card';
 import Set from '../classes/Set';
@@ -29,12 +29,11 @@ const HomePage = () => {
 
     const [isEditPopupVisibile, setIsEditPopupVisibile] = useState(false);
     const [editPopUpState, setEditPopupState] = useState("EDIT_SET");
-
     
     const fetchSets = async () => {
         try {
             const userID = localStorage.getItem('userId');
-            const response = await axios.get(`http://localhost:3000/api/v1/sets/${userID}`); // Use POST with a body
+            const response = await axios.get(`http://localhost:3000/api/v1/sets/${userID}`); 
             console.log(response.data);
             const fetchedSets = response.data.map(set => 
                 new Set(set.count, set.date, set.id, set.name, set.user_id)
@@ -99,9 +98,11 @@ const HomePage = () => {
         fetchCards(setID);
         navigate('/study');
     }
-    const HandleEditSetSelected = (setID) => {
+    const HandleEditSetSelected = (setID, setName) => {
         //get and cache set
         dispatch(setSetId(setID)); // Dispatch action to set the selected set ID
+        dispatch(setSetName(setName));
+        console.log("setid from HandleEditSetSelected: ", setID);
         fetchCards(setID);
         handleEditSet();
     }
@@ -127,14 +128,14 @@ const HomePage = () => {
                     </button>
                     <button className="bg-burgundy edit-icon-button" onClick={(e) => {
                         e.stopPropagation();
-                        HandleEditSetSelected(set.id);
+                        HandleEditSetSelected(set.id, set.name);
                         }}>
                         Edit
                     </button>
                 </div>
               ))}
               {isCreatePopupVisible && <CreateSetPopUp onClose={closeCreatePopup} onSetPush={pushSet} state={createPopUpState} onAddCard={pushSet}/>}
-              {isEditPopupVisibile && <EditSetPopUp onClose={closeEditPopup} state={editPopUpState} onAddCard={pushSet}/>}
+              {isEditPopupVisibile && <EditSetPopUp onClose={closeEditPopup} onAddCard={pushSet}/>}
             </div>
         </div>
     );
