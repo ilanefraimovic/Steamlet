@@ -11,6 +11,7 @@ const CardController = {
       res.status(500).json({ error: error.message });
     }
   },
+
   getAllCardsById: async (req, res) => {
     try {
       const setId = req.body.setId;
@@ -23,6 +24,7 @@ const CardController = {
       console.log(error.message);
     }
   },
+
   addCard: async (req, res) => {
     try {
         console.log("rec body from card controller:")
@@ -39,8 +41,8 @@ const CardController = {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-  }
-  ,
+  },
+
   deleteCard: async (req, res) => {
       try {
           console.log(req.body); // This will help you see the incoming data
@@ -56,6 +58,22 @@ const CardController = {
       } catch (error) {
           res.status(500).json({ error: error.message });
       }
+  },
+
+  updateCard: async (req, res) => {
+    try {
+        console.log("update Card:")
+        console.log("rec body from card controller:")
+        console.log(req.body); // This will help you see the incoming data
+        const card = req.body; 
+        if (!card) {
+            throw new Error("Card Info is required");
+        }
+        const response = await CardService.updateCard(card);
+        res.json({ response });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
   }
 };
 

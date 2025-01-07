@@ -37,7 +37,17 @@ const CardService = {
     } catch (error) {
       throw error;
     }
+  },
+
+  updateCard: async (cardData) => {
+    try {
+      const cardId = await CardRepository.updateCard(cardData);
+      return cardId;
+    } catch (error) {
+      throw error;
+    }
   }
+
 };
 
 module.exports = CardService;

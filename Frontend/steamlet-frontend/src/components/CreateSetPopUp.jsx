@@ -64,7 +64,7 @@ const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
                         type="text"
                         placeholder="Set Name"
                         ref={setNameRef}
-                        style={{ padding: "8px", width: "100%", marginBottom: "70px" }}
+                        style={{ fontSize: "large", padding: "8px", width: "100%", marginBottom: "70px" }}
                     />
                     <div className="popup-button-container">
                         <button className="bg-paleYellow hover:bg-darkerpaleYellow popup-button" onClick={handleCreate}>
@@ -86,13 +86,13 @@ const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
                         type="text"
                         placeholder="Term"
                         ref={termRef}
-                        style={{ padding: "8px", width: "100%", marginBottom: "10px" }}
+                        style={{ fontSize: "large", padding: "8px", width: "100%", marginBottom: "10px" }}
                     />
                     <input
                         type="text"
                         placeholder="Definition"
                         ref={definitionRef}
-                        style={{ padding: "8px", width: "100%", marginBottom: "10px" }}
+                        style={{ fontSize: "large", padding: "8px", width: "100%", marginBottom: "10px" }}
                     />
                     <div className="popup-button-container">
                         <button className="bg-paleYellow hover:bg-darkerpaleYellow popup-button" onClick={handleCardAdded}>

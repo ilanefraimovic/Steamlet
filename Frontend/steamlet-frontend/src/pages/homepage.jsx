@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import "../App.css"
 import CreateSetPopUp from "../components/CreateSetPopUp"
@@ -48,7 +48,7 @@ const HomePage = () => {
     }, []);
 
 
-    const fetchCards = async (setId) => {
+    const fetchCards = useCallback(async (setId) => {
         try {
             const requestBody = {
                 setId: setId 
@@ -58,13 +58,14 @@ const HomePage = () => {
             const fetchedCards = response.data.map(card => ({
                 term: card.term,
                 definition: card.definition,
+                id: card.id
             }));
             console.log("fetched cards: " + JSON.stringify(fetchedCards));
             dispatch(setCards(fetchedCards));
         } catch (error) {
             console.error("Error fetching cards:", error);
         }
-    };
+    }, [dispatch]);
 
 
     const handleNewSet = () => {
@@ -87,8 +88,9 @@ const HomePage = () => {
         fetchSets();
     };
 
-    const closeEditPopup = () => {
+    const closeEditPopup = async () => {
         console.log("Closing popup..."); 
+        await fetchSets();
         setIsEditPopupVisibile(false);
     };
 
@@ -135,7 +137,7 @@ const HomePage = () => {
                 </div>
               ))}
               {isCreatePopupVisible && <CreateSetPopUp onClose={closeCreatePopup} onSetPush={pushSet} state={createPopUpState} onAddCard={pushSet}/>}
-              {isEditPopupVisibile && <EditSetPopUp onClose={closeEditPopup} onAddCard={pushSet}/>}
+              {isEditPopupVisibile && <EditSetPopUp onClose={closeEditPopup} onAddCard={pushSet} onFetchCards={fetchCards} />}
             </div>
         </div>
     );

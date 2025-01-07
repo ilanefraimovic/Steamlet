@@ -61,6 +61,22 @@ const CardRepository = {
         resolve(results.affectedRows); // Returns the number of rows affected
       });
     });
+  },
+
+  updateCard: (cardData) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        UPDATE cards
+        SET term = ?, definition = ?
+        WHERE card_id = ?
+      `;
+      const values = [cardData.term, cardData.definition, cardData.id];
+  
+      db.query(query, values, (error, results) => {
+        if (error) return reject(error);
+        resolve(cardData.id); // Returns the card ID that was effected
+      });
+    });
   }
 };
 

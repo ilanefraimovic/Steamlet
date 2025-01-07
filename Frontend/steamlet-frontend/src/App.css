@@ -284,8 +284,10 @@ html, body {
   flex: 1;
   height: 50%;
   border-radius: 10px;
+  font-size: large;
 }
 .popup-button2 {
+  font-size: large;
   padding: 10px;
   flex: 1;
   height: 100%;
