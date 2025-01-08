@@ -45,16 +45,13 @@ const CardController = {
 
   deleteCard: async (req, res) => {
       try {
-          console.log(req.body); // This will help you see the incoming data
-          const { cardId, userId } = req.body; 
-          if (!cardId || !userId) {
-              throw new Error("cardId and userId are required");
+          const cardId = req.params.cardId;
+          console.log("card id from delete card (card controller)", cardId);
+          if (!cardId ) {
+              throw new Error("cardId is required");
           }
-
-          const oldCard = new Card({ id: cardId, userId: userId});
-
-          const oldCardId = await CardService.deleteCard(oldCard);
-          res.json({ oldCardId });
+          const response = await CardService.deleteCard(cardId);
+          res.json(response);
       } catch (error) {
           res.status(500).json({ error: error.message });
       }
@@ -70,7 +67,7 @@ const CardController = {
             throw new Error("Card Info is required");
         }
         const response = await CardService.updateCard(card);
-        res.json({ response });
+        res.json(response);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

@@ -9,7 +9,7 @@ router.post('/userCards', CardController.getAllCardsById);
 
 router.post('/add', CardController.addCard);
 
-router.delete('/delete', CardController.deleteCard);
+router.delete('/delete/:cardId', CardController.deleteCard);
 
 router.put('/update', CardController.updateCard);
 
