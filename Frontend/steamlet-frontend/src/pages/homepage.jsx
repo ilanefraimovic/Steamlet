@@ -67,7 +67,6 @@ const HomePage = () => {
         }
     }, [dispatch]);
 
-
     const handleNewSet = () => {
         setCreatePopupState("NAME_SET")
         setIsCreatePopupVisible(true);
@@ -99,7 +98,7 @@ const HomePage = () => {
         dispatch(setSetId(setID)); // Dispatch action to set the selected set ID
         fetchCards(setID);
         navigate('/study');
-    }
+    };
     const HandleEditSetSelected = (setID, setName) => {
         //get and cache set
         dispatch(setSetId(setID)); // Dispatch action to set the selected set ID
@@ -107,7 +106,12 @@ const HomePage = () => {
         console.log("setid from HandleEditSetSelected: ", setID);
         fetchCards(setID);
         handleEditSet();
-    }
+    };
+
+    const userLogOut = () => {
+        localStorage.removeItem('userId');
+        navigate('/');
+    };
 
     return (
         <div className="homepage-container">
@@ -116,7 +120,11 @@ const HomePage = () => {
                 <p className="title2">Your Sets:</p>
                 <button className="friends-button bg-turquoise">Friends</button>
                 <button className="profile-button bg-turquoise">Profile</button>
-                <button className="logout-button bg-turquoise">Log Out</button>
+                <button
+                    className="logout-button bg-turquoise"
+                    onClick={userLogOut}>
+                        Log Out
+                </button>
             </div>
             <div className="sets-container">
                 <button className="bg-paleYellow hover:bg-darkerpaleYellow set-item" onClick={handleNewSet}>
