@@ -1,5 +1,13 @@
 {
   "dependencies": {
     "react-helmet": "^6.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "scripts": {
+    "start:api": "cd Backend && npm start",
+    "start:client": "cd Frontend/steamlet-frontend && npm start -- --yes",
+    "start": "concurrently \"npm run start:api\" \"npm run start:client\""
   }
 }

@@ -65,9 +65,9 @@ const SetRepository = {
 
     deleteSet: (setData) => {
       return new Promise((resolve, reject) => {
-        const query = 'DELETE FROM sets WHERE id = ?';
+        const query = 'DELETE FROM sets WHERE set_id = ?';
 
-        db.query(query, [setData.id], (error, results) => {
+        db.query(query, [setData], (error, results) => {
           if (error) {
             return reject(error); // Reject promise on error
           }

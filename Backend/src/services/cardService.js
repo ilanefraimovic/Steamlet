@@ -30,14 +30,25 @@ const CardService = {
       throw error;
     }
   },
-  deleteCard: async (cardData) => {
+  deleteCard: async (cardId_) => {
     try {
-      const oldCardId = await CardRepository.deleteCard(cardData);
-      return oldCardId;
+      const cardId = await CardRepository.deleteCard(cardId_);
+      if (!cardId) throw new Error('Card not found');
+      return cardId;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  updateCard: async (cardData) => {
+    try {
+      const cardId = await CardRepository.updateCard(cardData);
+      return cardId;
     } catch (error) {
       throw error;
     }
   }
+
 };
 
 module.exports = CardService;
