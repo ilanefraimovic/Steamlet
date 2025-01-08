@@ -57,6 +57,18 @@ const CardRepository = {
     });
   },
 
+  deleteCardsBySetId: (setId) => {
+    return new Promise((resolve, reject) => {
+      const query = `DELETE FROM cards WHERE set_id = ?`;
+  
+      db.query(query, [setId], (error, results) => {
+        if (error) return reject(error);
+        resolve(setId); // Returns the Card Id if successful
+      });
+    });
+
+  },
+
   updateCard: (cardData) => {
     return new Promise((resolve, reject) => {
       const query = `

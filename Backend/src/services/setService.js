@@ -1,4 +1,5 @@
 // src/services/setService.js
+const CardRepository = require('../dataAccess/cardRepository');
 const SetRepository = require('../dataAccess/setRepository');
 
 const SetService = {
@@ -52,9 +53,10 @@ const SetService = {
 
   deleteSet: async (setData) => {
     try {
-        const rowsDeleted  = await SetRepository.deleteSet(setData);
-        if (!rowsDeleted) throw new Error('Set Not Found');
-        return rowsDeleted;
+        const setRowsDeleted  = await SetRepository.deleteSet(setData);
+        await CardRepository.deleteCardsBySetId(setData);
+        if (!setRowsDeleted ) throw new Error('Set or Cards Not Found');
+        return setRowsDeleted;
     } catch (error) {
         throw error;
     }

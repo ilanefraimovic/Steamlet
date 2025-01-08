@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { pushCardToDB } from "../utils/cardUtils.js"
 
 const EditSetPopUp = ({ onClose, onAddCard, onFetchCards }) => {
     const [popupState, setPopupState] = useState("EDIT_SET");
@@ -37,7 +38,7 @@ const EditSetPopUp = ({ onClose, onAddCard, onFetchCards }) => {
         } catch (error) {
             console.error("Error Editing Card: ", error);
         }
-    }
+    };
 
     const deleteCard = async(cardId)  => {
         try {
@@ -50,7 +51,8 @@ const EditSetPopUp = ({ onClose, onAddCard, onFetchCards }) => {
             console.error("Error Deleting Card", error);
         }
 
-    }
+    };
+    
     //EVENT FUNCTIONS
     const navigateToEditSetHomePage = () => {
         setPopupState("EDIT_SET");
@@ -90,10 +92,6 @@ const EditSetPopUp = ({ onClose, onAddCard, onFetchCards }) => {
         setPopupState("EDIT_SELECTED_CARD");
     };
 
-    const handleCardAdded = () => {
-
-    };
-
     const handleCardEdited = async (card) => {
         console.log("handleCardEditedParam:")
         console.log(card);
@@ -113,6 +111,23 @@ const EditSetPopUp = ({ onClose, onAddCard, onFetchCards }) => {
       await onFetchCards(setId);
       setPopupState("EDIT_CARD");
     };
+
+    const handleCardAdded = async () => {
+        const term = termRef.current.value;
+        const definition = definitionRef.current.value;
+        if (term && definition && setId) {
+            const cardInfo = {
+                term_: term,
+                definition_: definition,
+                setId_: setId
+            }
+            await pushCardToDB(cardInfo);
+            onAddCard({ term, definition});
+            navigateToEditSetHomePage();
+            termRef.current.value = '';
+            definitionRef.current.value = '';
+        }
+    }
 
     if (popupState === "EDIT_SET") {
         return (

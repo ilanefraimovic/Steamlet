@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import { pushCardToDB } from "../utils/cardUtils.js"
 
 const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
     const [popupState, setPopupState] = useState("NAME_SET");
@@ -35,21 +36,14 @@ const CreateSetPopUp = ({ onClose, onSetPush, onAddCard }) => {
         console.log("setID, term, def = ", responseSetID, term, definition);
         //max char limit 324 NEED TO IMPLEMENT
         if (term && definition && responseSetID) {
-            const pushCardToDB = async () => {
-            try {
-                const requestBody = {
-                    setId:responseSetID, 
-                    term: term,
-                    definition:definition
-                };
-                const response = await axios.post('http://localhost:3000/api/v1/cards/add', requestBody); // Use POST with a body
-            } catch (error) {
-                console.error("Error adding card", error);
+            const cardInfo = {
+                setId_: responseSetID,
+                term_: term,
+                definition_: definition
             }
-        };
-            pushCardToDB();
+            const response = pushCardToDB(cardInfo);
+            console.log("response: ", response);
             onAddCard({ term, definition });
-            // Clear term and definition inputs for next entry
             termRef.current.value = '';
             definitionRef.current.value = '';
         }
