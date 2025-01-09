@@ -93,6 +93,25 @@ CREATE TABLE Cards (
     create_date DATE,
     FOREIGN KEY (set_id) REFERENCES Sets(set_id) ON DELETE CASCADE
 );
+
+CREATE TABLE Friend_requests (
+    request_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id_from INT NOT NULL,
+    user_id_to INT NOT NULL,
+    request_date DATETIME DEFAULT NOW(),
+    request_status ENUM('CONFIRMED', 'PENDING') NOT NULL DEFAULT 'PENDING',
+    FOREIGN KEY (user_id_from) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id_to) REFERENCES Users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Friends (
+    friendship_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    friend_user_id INT NOT NULL,
+    friendship_date DATETIME DEFAULT NOW(),
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_user_id) REFERENCES Users(id) ON DELETE CASCADE
+);
 ```
 
 ## Starting the Application
